@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>登陆</title>
+    <link rel="stylesheet" media="screen" href="../../static/css/bootstrap.min.css">
+    <link rel="stylesheet" media="screen" href="../../static/css/font-awesome.min.css">
+    <link rel="stylesheet" media="screen" href="../../static/css/custom.css">
+</head>
+<body>
+
+<nav id="ezcloud-header" class="navbar navbar-default" role="navigation">
+    <div class="container-fluid container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu-items">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!--<div id="brand-logo" class="logo"></div>-->
+        </div>
+
+        <div class="collapse navbar-collapse" id="menu-items">
+            <ul lclass="nav navbar-nav navbar-left">
+                <div id="logo" class="logo"></div>
+            </ul>
+
+            <ul class="nav navbar-nav  pull-right">
+                <li><a href="#">首页</a></li>
+                <li><a href="#">解决方案</a></li>
+                <li><a href="#">合作伙伴</a></li>
+                <li><a href="#">招贤纳士</a></li>
+                <li><a href="#">关于我们</a></li>
+
+            </ul>
+
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div id="content" class="container">
+
+<div id="login">
+    <form id="login-box" class="pull-right">
+        <div class="input-group1 center-block">
+            <img style="width:75px;"  src="../../static/images/user.png">
+        </div>
+        <div class="input-group1 ">
+            <input type="text" name="user" class="form-control" placeholder="E-mail / Tel Phone" >
+            <hr class="vertical-line" ><span class="input-group-addon" ><img src="../../static/images/email.png"></span>
+        </div>
+        <div class="input-group1">
+            <input type="password" name="password" class="form-control" placeholder="password">
+            <span class="input-group-addon"><img src="../../static/images/email.png"></span>
+        </div>
+        <!--<div class="input-group">
+            <label class="input"> <i class="icon-append fa fa-user"></i>
+                <input type="text" name="name" placeholder="Name">
+            </label>
+        </div>-->
+        <span class="forget-password">忘记密码？</span>
+        <div class="input-group1 input-group-sm">
+            <input type="checkbox" class="form-control" style="background-color: transparent;height:15px;postion:relative;top:3px;">
+            <span class="input-group-addon" style="border: 0;background-color: transparent; left: -10px;postion:relative;">保持登陆状态</span>
+        </div>
+        <div class="input-group1 input-group-sm center-block">
+            <a onclick="login();" class="btn btn-primary" style="width:200px;">登 陆</a>
+        </div>
+    </form>
+</div>
+</div>
+
+<div id="footer">
+    Copyright @ 2014 CNIaas.com
+</div>
+
+<script src="../../static/js/libs/jquery.min.js"></script>
+<script> if (!window.jQuery) { document.write('<script src="../../static/js/jquery-validate/jquery.validate.additional-methods.js"><\/script>');} </script>
+<script src="../../static/js/libs/jquery-2.0.2.min.js"></script>
+<script src="../../static/js/libs/jquery-ui-1.10.3.min.js"></script>
+<script src="../../static/js/libs/bootstrap.js"></script>
+<script src="../../static/js/login.js"></script>
+</body>
+</html>

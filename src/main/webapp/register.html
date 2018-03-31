@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>注册</title>
+    <link rel="stylesheet" media="screen" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" media="screen" href="static/css/font-awesome.min.css">
+    <link rel="stylesheet" media="screen" href="static/css/custom.css">
+
+
+</head>
+<body>
+
+<nav id="ezcloud-header" class="navbar navbar-default" role="navigation">
+    <div class="container-fluid container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu-items">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!--<div id="brand-logo" class="logo"></div>-->
+        </div>
+
+        <div class="collapse navbar-collapse" id="menu-items">
+            <ul lclass="nav navbar-nav navbar-left">
+                <div id="logo" class="logo"></div>
+            </ul>
+
+            <ul class="nav navbar-nav  pull-right">
+                <li><a href="#">首页</a></li>
+                <li><a href="#">解决方案</a></li>
+                <li><a href="#">合作伙伴</a></li>
+                <li><a href="#">招贤纳士</a></li>
+                <li><a href="#">关于我们</a></li>
+
+            </ul>
+
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<hr style="background-color:#B7B7B7; height:1px;">
+<div id="content" class="container text-center">
+<!--    <div class="row text-center" style="line-height: 40px;">
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 "></div>
+        <div class="horizontal-line col-lg-2 col-md-2 col-sm-2  col-xs-2" ></div>
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 " style="padding:0;"><div class="rounded-rectangle ">1</div><div >填写账户信息</div></div>
+        <div class="horizontal-line col-lg-4 col-md-4 col-sm-4 col-xs-4"></div>
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 " style="padding:0;"><div class="rounded-rectangle " style="background-color: #8F8F8F;">2</div><div >注册成功</div></div>
+        <div class="horizontal-line col-lg-2 col-md-2 col-sm-2 col-xs-2 "></div>
+    </div>
+    <hr style="background-color:#B7B7B7;height: 1px;">-->
+    <form id="register-form">
+        <div class="input-group-register row">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">邮箱<span >*</span>：</span>
+            <input type="email" name="email" class="col-lg-4 col-md-6 col-sm-8 col-xs-10" placeholder="邮箱">
+        </div>
+       <input style="display: none;">
+        <div class="input-group-register row">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">密码<span >*</span>：</span>
+            <input type="password" id="password" name="password" class="col-lg-4 col-md-6 col-sm-8 col-xs-10" placeholder="密码">
+        </div>
+        <div class="input-group-register row">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">重复密码<span >*</span>：</span>
+            <input type="password" name="repeatPassword" class="col-lg-4 col-md-6 col-sm-8 col-xs-10" placeholder="确认密码">
+        </div>
+        <div class="input-group-register row">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">性别<span>*</span>：</span>
+            <div class="col-lg-1 col-md-1 col-sm-2 col-xs-5"><input type="radio" name="sex" value="man"/><span class="sex-span">男</span></div>
+            <div class="col-lg-1 col-md-1 col-sm-2 col-xs-5"><input type="radio" name="sex" value="woman"/><span class="sex-span">女</span></div>
+        </div>
+        <div class="input-group-register row">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">手机号<span>*</span>：</span>
+            <input type="text" name="telNumber" class="col-lg-4 col-md-6 col-sm-8 col-xs-10" placeholder="手机号码">
+        </div>
+<!--        <div class="input-group-register row">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">短信验证码<span>*</span>：</span>
+            <input type="text" name="SMSCode" class="col-lg-2 col-md-3 col-sm-4 col-xs-5" placeholder="">
+            <span class="col-lg-2 col-md-3 col-sm-4 col-xs-5" style="padding-right:0;"><button onclick="getPhoneVerifyNum()" id="getPhoneNum" class="pull-right col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height: 34px; ">获取短信验证码</button></span>
+        </div>
+
+        <div class="input-group-register row">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">验证码<span>*</span>：</span>
+            <input type="text"  name="verifyCode" class="col-lg-2 col-md-3 col-sm-4 col-xs-5" placeholder="">
+            <span class="col-lg-2 col-md-3 col-sm-4 col-xs-5" style="padding-right:0;">
+                &lt;!&ndash;<img class="col-lg-6 col-md-6 col-sm-6 col-xs-6 verify-code-img" alt="验证码">&ndash;&gt;
+                <img id="verifyCode" class="col-lg-6 col-md-6 col-sm-6 col-xs-6 verify-code-img" src="/action/userAccount/verifyCode"  />
+                <span class="col-lg-6 col-md-6 col-sm-6 col-xs-6 verify-code-text"><a onclick="refreshVerifyCode()">看不清，换一张</a></span>
+            </span>
+        </div>-->
+        <div class="input-group-register row" style="padding-bottom: 0;">
+            <span class="col-lg-5 col-md-5 col-sm-5 col-xs-7" style="padding-right:0;" ><a id="registerBtn" onclick="register();" class="btn btn-primary col-lg-5 col-md-5 col-sm-5 col-xs-7"  style="float:right;">同意协议并注册</a></span>
+        </div>
+        <div class="input-group-register row" style="padding-top: 0;"></div>
+        <span class="col-lg-5 col-md-5 col-sm-5 col-xs-7" style="padding-right:0;" ><a class="col-lg-5 col-md-5 col-sm-5"  style="float:right;">《云直播网站协议》</a></span>
+    </form>
+
+</div>
+<!--<hr style="background-color:#B7B7B7; height:1px;margin-top: 50px;">
+<div id="footer">
+    Copyright @ 2014 CNIaas.com
+</div>-->
+<script src="static/js/libs/jquery.min.js"></script>
+<script src="static/js/jquery-validate/jquery.validate.min.js"></script>
+<script src="static/js/jquery-validate/jquery.validate.additional-methods.js"></script>
+<script src="static/js/libs/bootstrap.js"></script>
+<script src="static/js/libs/ajax.js"></script>
+<script src="static/js/libs/tools.js"></script>
+<script src="static/js/libs/md5.js"></script>
+<script src="static/js/register.js"></script>
+</body>
+</html>

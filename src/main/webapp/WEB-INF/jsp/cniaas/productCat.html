@@ -1,0 +1,252 @@
+<!-- 按钮 -->
+<div class="row margin-bottom-5 col-sm-12 col-xs-12 col-md-12 col-lg-12" id="productCat_btns">
+    <a id="btn_productCat_refresh" class="btn btn-default" href="javascript:void(0);" onclick="productCatloadDataTableScripts()"><i class="fa fa-refresh"></i> 刷新</a>
+    <!--<a id="btn_productCat_create"  class="btn btn-success disabled"  pname="customer_add" data-toggle="modal" data-target="#productCat_oper_modal" href="#" ><i class="fa fa-plus"></i> 新增</a>-->
+    <a id="btn_productCat_edit"  class="btn btn-default disabled"><i class="fa fa-plus"></i> 编辑</a>
+    <!--<a id="btn_productCat_delete"  class="btn btn-default disabled"  pname="customer_delete"  href="javascript:void(0);"><i class="fa fa-trash-o"></i> 删除</a>-->
+</div>
+<!-- 按钮 -->
+<!-- widget grid -->
+<section id="productCat_widget-grid" class="">
+
+    <!-- row -->
+    <div class="row">
+
+        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-2-productCat" data-widget-editbutton="false">
+
+
+                <!-- widget div-->
+                <div>
+                    <!-- widget edit box -->
+                    <div class="jarviswidget-editbox">
+                        <!-- This area used as dropdown edit box -->
+                    </div>
+                    <!-- end widget edit box -->
+
+                    <div class="widget-body no-padding">
+                        <div class="widget-body-toolbar">
+                        </div>
+                        <div id="productCat_list_table">
+                            <table id='product_cat-table' class='table table-responsive talign_c table-striped table-bordered table-hover smart-form has-tickbox'>
+                                <thead id='productCat_thead' style="display: none;"></thead>
+                                <tbody id='productCat_tbody'>
+                                <tr class='odd'><td class='dataTables_empty' valign='top' colspan='9' style='border-width:0px;'><span><h3><i class='fa fa-cog fa-spin'></i>正在努力加载...</h3></span></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end widget -->
+
+        </article>
+        <!-- WIDGET END -->
+
+    </div>
+
+    <!-- end row -->
+
+    <!-- end row -->
+
+</section>
+<!-- end widget grid -->
+
+<!--新增产品类型-->
+<form style="display: none;" id="productCat-wizard-1" novalidate="novalidate" class="smart-form">
+    <div id="create_productCat_modal" class="form-horizontal">
+        <div class="form-group " id="create_productCatN_div">
+            <label  style="margin-top: 10px;" class="col-md-2 col-xs-2 col-sm-2 col-lg-2 control-label" for="create_productCat_name">名称：</label>
+            <div class="col-md-9 col-xs-9 col-sm-9 col-lg-9">
+                <input  style="margin-top: 10px;" class="form-control" id="create_productCat_name" maxlength="20" onblur="checkproductCatName1()" placeholder="" type="text" name="productCatName" />
+                <span class="note note-error hide" id="create_productCatN_note">名称只由1-20位汉字、字母、数字和下划线且不能以下划线开头和结尾.</span>
+                <span class="help-block" id="create_productCatN_block" for="create_productCat_name"></span>
+            </div>
+        </div>
+        <div class="form-group form_group" id="productCat_zones_div">
+            <label class="col-md-2 col-sm-2 col-xs-2 col-lg-2 control-label  text-right" style="" for="productCat_zones">计价类型：<span style="margin-top: 8px;color:red;" > * </span></label>
+            <div class="col-md-9 col-sm-9 col-xs-9 col-lg-9">
+                <section>
+                    <label class="select">
+                        <select id="productCat_zones" name="zone">
+                        </select>
+                    </label>
+                </section>
+                <span class="help-block" id="productCat_zones_block" for="create_username"></span>
+            </div>
+        </div>
+
+        <div class="form-group" id="create_username_div">
+            <label class="col-md-3 col-xs-3 col-sm-3 col-lg-3 control-label  text-right" for="create_username"
+                   name="productCatUsername">单位名称：</label>
+            <div class="col-md-8 col-xs-8 col-sm-8 col-lg-8">
+                <input style="margin-top: 10px;" class="form-control" id="create_username" onblur="checkUsername()" maxlength="18" placeholder="" type="text" name="username" />
+                <span class="help-block" id="create_username_block" for="create_username"></span>
+            </div>
+        </div>
+        <div style="display: none;">
+            <input class="form-control" name="ins_n" type="text" autocomplete="off" />
+        </div>
+        <div class="form-group" id="create_password_div">
+            <label class="col-md-3 col-xs-3 col-sm-3 col-lg-3 control-label  text-right" for="create_password"
+                   name="productCatPassword">描述：</label>
+            <div class="col-md-8 col-xs-8 col-sm-8 col-lg-8">
+                <input style="margin-top: 10px;" class="form-control" id="create_password" placeholder="" type="text" name="password" />
+                <span class="help-block" id="create_password_block" for="create_username"></span>
+            </div>
+        </div>
+    </div>
+</form>
+
+        <!--编辑-->
+<div id="productCat_edit_modal" class="text-center" style="display:none;">
+    <form id="productCat-form">
+        <div class="input-group-product row">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">名称<span >*</span>：</span>
+            <input type="text" id="productCat_edit_name" name="bill_unit_count  "  class="col-lg-4 col-md-6 col-sm-8 col-xs-10" placeholder="">
+        </div>
+        <div class="input-group-product row">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">计价类型<span>*</span>：</span>
+            <section>
+                <label class="select col-lg-4 col-md-6 col-sm-8 col-xs-10">
+                    <select disabled="disabled" id="productCat_edit_billType" name="productCat_billType" style="width: 320px;margin-left:-10px;">
+
+                    </select>
+                </label>
+            </section>
+        </div>
+        <div class="input-group-product row">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">状态<span>*</span>：</span>
+            <section>
+                <label class="select col-lg-4 col-md-6 col-sm-8 col-xs-10">
+                    <select id="productCat_edit_status" name="productCat_status" style="width: 320px;margin-left:-10px;">
+                        <option value="enable">启用</option>
+                        <option value="disable">禁用</option>
+                    </select>
+                </label>
+            </section>
+        </div>
+        <div class="input-group-product row basic">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">描述：</span>
+            <input type="text" id="productCat_edit_des" name="bill_unit_count  "  class="col-lg-4 col-md-6 col-sm-8 col-xs-10" placeholder="">
+        </div>
+
+        <div class="input-group-product row" style="padding-top: 20px;">
+            <span class="col-lg-5 col-md-5 col-sm-5 col-xs-7" style="padding-right:0;" ><a id="productCat_edit_cancelBtn"  class="btn btn-default col-lg-3 col-md-3 col-sm-3 col-xs-3"  style="float:right;">取消</a></span>
+            <span class="col-lg-5 col-md-5 col-sm-5 col-xs-7" style="padding-left:10px;" ><a id="productCat_edit_btn"  class="btn btn-primary col-lg-3 col-md-3 col-sm-3 col-xs-3"  style="float:left;">编辑</a></span>
+        </div>
+
+        <div class="input-group-product row" style="padding-top: 0;"></div>
+    </form>
+
+</div>
+<script type="text/javascript">
+
+    // DO NOT REMOVE : GLOBAL FUNCTIONS!
+    pageSetUp();
+
+    // PAGE RELATED SCRIPTS
+
+    productCatloadDataTableScripts();
+
+    function productCatloadDataTableScripts() {
+        loadScript("../../static/js/plugin/datatables/jquery.dataTables-cust.js", dt_2);
+
+        function dt_2() {
+            loadScript("../../static/js/plugin/datatables/ColReorder.min.js", dt_3);
+        }
+
+        function dt_3() {
+            loadScript("../../static/js/plugin/datatables/FixedColumns.min.js", dt_4);
+        }
+
+        function dt_4() {
+            loadScript("../../static/js/plugin/datatables/ColVis.min.js", dt_5);
+        }
+
+        function dt_5() {
+            loadScript("../../static/js/plugin/datatables/ZeroClipboard.js", dt_6);
+        }
+
+        function dt_6() {
+            loadScript("../../static/js/plugin/datatables/media/js/TableTools.min.js", dt_7);
+        }
+
+        function dt_7() {
+            loadScript("../../static/js/plugin/datatables/DT_bootstrap.js", dt_8);
+        }
+        function dt_8() {
+            loadScript("../../static/js/cniaas/productCat.js", productCatInit);
+        }
+
+    }
+
+    function productCatInit(){
+        //初始化表格
+        loadproductCatTable();
+        $("#btn_productCat_refresh").on("click",function (){
+
+        });
+
+        //删除
+        $('#btn_productCat_delete').on("click",function(){
+
+        });
+        //编辑
+        $("#btn_productCat_edit").on("click",function(){
+            //获取详情
+            doPost("/action/productCat/detail",{productCatId:sel_productCat_id},function(objs){
+                if(objs.httpCode=="200"){
+                    $("#productCat_edit_modal").show().siblings().hide();
+                    $("#productCat_edit_name").val(objs.data.name);
+                    $("#productCat_edit_status").attr("value",objs.data.status);
+                    $("#productCat_edit_des").val(objs.data.description);
+                    var productCat = document.getElementById("productCat_edit_billType").options;
+                    clearOptions(productCat);
+                    addOption(productCat, rpL(objs.data.billType), objs.data.billType);
+
+                }else{
+                    console.log("code :" + objs.code + "  msg:" + objs.message);
+                    showErrorMsg("","code :" + objs.code + "  msg:" + objs.message);
+                }
+
+            });
+        });
+        $("#productCat_edit_cancelBtn").on("click",function(){
+            $("#productCat_widget-grid").show().siblings().hide();
+            $("#productCat_btns").show();
+            $("#btn_productCat_edit").addClass("disabled");
+            $('input[name="cbx_productCat_list"]').attr("checked",false);
+        });
+        $("#productCat_edit_btn").on("click",function(){
+            var name=$("#productCat_edit_name").val();
+            var status=$("#productCat_edit_status").val();
+            var description=$("#productCat_edit_des").val();
+            var billType=$("#productCat_edit_billType").val();
+            doPost("/action/productCat/edit",{productCatId:sel_productCat_id,name:name,status:status,description:description,billType:billType},function(objs){
+                if(objs.httpCode=="200"){
+                    loadproductCatTable();
+                    $("#productCat_widget-grid").show().siblings().hide();
+                    $("#productCat_btns").show();
+                    $("#btn_productCat_edit").addClass("disabled");
+                    showMsg("温馨提示","成功修改产品类别");
+                }else{
+                    console.log("code :" + objs.code + "  msg:" + objs.message);
+                    showErrorMsg("","code :" + objs.code + "  msg:" + objs.message);
+                }
+
+            });
+        });
+
+    }
+    var all_productCat_data = null;
+    //点击tr赋值
+
+    function productTableTrClick(){
+        $('#product_cat-table').delegate('tr', 'click', function(event){
+            all_productCat_data = null;
+            all_productCat_data = productCatTable.fnGetData( this );
+        });
+    }
+</script>

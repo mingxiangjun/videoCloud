@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>用户中心</title>
+    <link rel="stylesheet" media="screen" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" media="screen" href="static/css/font-awesome.min.css">
+    <link rel="stylesheet" media="screen" href="static/js/libs/DataTables-1.10.2/CSS/jquery.dataTables.css">
+    <link rel="stylesheet" media="screen" href="static/css/transaction.css">
+    <link rel="stylesheet" media="screen" href="static/css/userCenter.css">
+</head>
+<body>
+
+<nav id="ezcloud-userCenter-header" class="navbar userCenter-header" role="navigation" style="background-color: #095D89;">
+    <div class="container-fluid container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu-items">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!--<div id="brand-logo" class="logo"></div>-->
+        </div>
+
+        <div class="collapse navbar-collapse" id="menu-items">
+            <ul lclass="nav navbar-nav navbar-left">
+                <div id="logo" class="logo"></div>
+            </ul>
+
+            <ul class="nav navbar-nav  user-info pull-right">
+                <li><a href="#">首页</a></li>
+                <li><a href="#">产品</a></li>
+                <li><a href="#">服务与支持</a></li>
+                <li><a href="#">控制台</a></li>
+                <li><a href="#">用户中心</a></li>
+                <li><a href="#">帮助中心</a></li>
+                <li><a onclick="logout()" href="#">退出</a></li>
+
+            </ul>
+
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div id="content" class="container">
+    <div class="row">
+<div class="col-lg-3 icon-append">管理中心</div>
+    <div class="col-lg-9 userCenter text-right" style="float:right;list-style:none;">
+
+        <ul class="nav nav-tabs ezcloud-nav-tabs" role="tablist">
+            <li><a href="#invoice-manger" role="tab" data-toggle="tab">发票管理</a></li>
+            <li><a href="#consumption-record" role="tab" data-toggle="tab">消费记录</a></li>
+            <li><a href="#account-manager" role="tab" data-toggle="tab">账户管理</a></li>
+            <li class="active"><a href="#user-info" role="tab" data-toggle="tab">个人信息</a></li>
+        </ul>
+    </div>
+    </div>
+</div>
+<hr style="background-color:#B7B7B7; height:1px;margin-top: 6px;">
+<div class="container tab-content">
+<div class="tab-pane active" id="user-info">
+    <div class="row" style="border: 1px solid #B7B7B7;padding: 40px 0px;margin-top: 20px;">
+        <div class="col-lg-2 text-center"><img  src="static/images/user.png"></div>
+        <div class="col-lg-10 base-info">
+            <li>登陆ID：</li>
+            <li>邮箱：</li>
+            <li>现金余额:<span style="font-size:1.4em;font-style:italic;color:#FFAB00"> 0 </span>元 <a class="btn btn-primary" style="width:100px; font-size:1em;margin-left:20px;">充&nbsp;&nbsp;值</a></li>
+        </div>
+    </div>
+        <div class="row">
+        <div class="col-lg-2 text-center">
+            <a class="btn btn-primary modify-pwd-btn" style="background-color: #095D89;border-color:#095D89;">修改密码</a>
+        </div>
+        <div class="col-lg-10" style="border: 1px solid #B7B7B7;padding: 50px 10px;margin-top: 30px;">
+            <div class="base-info-input row">
+                <span class="input-group-addon-text col-lg-3 "><span class="pull-right">当前密码</span></span>
+                <input type="password" name="oldPassword" class="" placeholder="">
+            </div>
+            <div class="base-info-input row">
+                <span class="input-group-addon-text col-lg-3"><span class="pull-right">新密码</span></span>
+                <input type="password" name="newPassword" class="" placeholder="">
+            </div>
+            <div style="border:dashed 1px #B7B7B7;  height:1px;margin:50px 0px 40px;"></div>
+            <div class="col-lg-6  text-center"><a  onclick="modifyPwd()" class="btn btn-primary " style="width: 100px;font-size: 1.3em;" >提&nbsp;&nbsp;交</a></div>
+        </div>
+    </div>
+</div>
+<div class="tab-pane" id="account-manager">
+<div class="row">
+    <ul class="nav nav-tabs nav-vertical  col-lg-2" style="font-size:1.2em;font-family: '黑体';" role="left-tablist">
+        <li><a href="#my-account" role="tab" data-toggle="tab">我的账户</a></li>
+        <li><a href="#transaction-management" role="tab" data-toggle="tab">交易管理</a></li>
+        <li><a href="#voucher-manager" role="tab" data-toggle="tab">代金券管理</a></li>
+        <li><a href="#charge-record-manager" role="tab" data-toggle="tab">充值记录</a></li>
+    </ul>
+    <div class="tab-content col-lg-10">
+        <div class="tab-pane" id="my-account">
+            <div style="border:solid 1px #DDDDDD; padding:20px  20px;">
+                <div style="margin-left: 20px;padding:20px 0;font-size:1.4em;">账户余额：<span style="font-size:1.4em;font-style:italic;color:#FFAB00"> 0 </span>元 </div>
+                <div style="border:dashed 1px #B7B7B7;  height:1px;margin:20px 0px 20px;"></div>
+                <div style="padding:5px;font-size:1.1em;">可用代金券：0&nbsp;张<a >&nbsp;&nbsp;查看明细</a></div>
+                <div style="margin-top:15px; border:solid 4px #DDDDDD; padding:25px;" class="row" >
+                    <ul class="nav nav-tabs  col-lg-10" style="float:left;" role="tablist">
+                        <li class="active"><a href="#online" role="tab" data-toggle="tab">在线充值</a></li>
+                        <li ><a href="#offline" role="tab" data-toggle="tab">线下充值</a></li>
+                    </ul>
+                    <div class="tab-content col-lg-10">
+                        <div class="tab-pane" id="online">
+                            <div style="padding: 30px;font-size: 1.1em;">充值金额：<input type="text" name="recharge-amount">&nbsp;&nbsp;元</div>
+                            <div>
+                                <div class="col-lg-2"><span class="input-group-addon-text  " style="font-size: 1.1em;position:relative;left: 20px;">充值方式<span>*</span>：</span></div>
+                                <div class="col-lg-9">
+                                    <div class="row"><div class="col-lg-5"><input type="radio" name="recharge-type" value="abe"/><span class="sex-span"><img style="height:40px; border:1px solid #B5B5B5; padding:5px; " src="static/images/bank-icon-3.png"></span></div></div>
+                                </div>
+                            </div>
+                            </div>
+                        <div class="tab-pane" id="offline">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr><th>账户名称</th><th>账户</th><th>开户银行网点地址</th></tr>
+                                </thead>
+                                <tbody>
+                                <tr><td>中国北京</td><td>23489033324023</td><td>中国北京华茂云天</td></tr>
+                                <tr><td>中国北京</td><td>23489033324023</td><td>中国北京华茂云天</td></tr>
+                                <tr><td>中国北京</td><td>2348903240237</td><td>中国北京华茂云天237</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="transaction-management"></div>
+        <div class="tab-pane" id="voucher-manager"></div>
+        <div class="tab-pane" id="charge-record-manager">
+
+        </div>
+    </div>
+</div>
+    </div>
+    <div class="tab-pane" id="consumption-record">
+        sdaffddd
+    </div>
+
+    <div class="tab-pane" id="invoice-manger">
+        sdaff2222
+    </div>
+</div>
+
+
+</div>
+<hr style="background-color:#B7B7B7; height:1px;margin-top: 50px;">
+<div id="footer">
+    Copyright @ 2014 CNIaas.com
+</div>
+<script src="static/js/libs/jquery-2.0.2.min.js"></script>
+<script src="static/js/libs/bootstrap.js"></script>
+<script src="static/js/jquery-validate/jquery.validate.min.js"></script>
+<script src="static/js/jquery-validate/jquery.validate.additional-methods.js"></script>
+
+<script src="static/js/libs/DataTables-1.10.2/js/jquery.dataTables.js"></script>
+
+
+<script src="static/js/libs/ajax.js"></script>
+<script src="static/js/libs/tools.js"></script>
+<script src="static/js/libs/i18n/dynamicLocale.js"></script>
+<script src="static/js/libs/i18n/i18n_locale.js"></script>
+<script src="static/js/libs/md5.js"></script>
+<script src="static/js/userCenter/userCenter.js"></script>
+<script src="static/js/userCenter/transaction-manager.js"></script>
+<script src="static/js/userCenter/voucher-manager.js"></script>
+<script src="static/js/userCenter/charge-record.js"></script>
+</body>
+</html>

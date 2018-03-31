@@ -1,0 +1,435 @@
+<!-- 按钮 -->
+<div id='product_btns' class="row margin-bottom-5 col-sm-12 col-xs-12 col-md-12 col-lg-12">
+    <a id="btn_product_refresh" class="btn btn-default" href="javascript:void(0);" onclick=" loadproductTable()"><i class="fa fa-refresh"></i> 刷新</a>
+    <a id="btn_product_create"  class="btn btn-success"  pname="customer_add" data-toggle="modal" data-target="#product_oper_modal" href="#" ><i class="fa fa-plus"></i> 新增</a>
+    <a id="btn_product_edit"  class="btn btn-default disabled"  pname="customer_update"><i class="fa fa-plus"></i> 编辑</a>
+    <!--<a id="btn_product_delete"  class="btn btn-default"  pname="customer_delete"  href="javascript:void(0);"><i class="fa fa-trash-o"></i> 删除</a>-->
+
+</div>
+<!-- 按钮 -->
+<!-- widget grid -->
+<section id="product_widget-grid" class="">
+
+    <!-- row -->
+    <div class="row">
+
+        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-2-product" data-widget-editbutton="false">
+                <!-- widget div-->
+                <div>
+                    <!-- widget edit box -->
+                    <div class="jarviswidget-editbox">
+                        <!-- This area used as dropdown edit box -->
+                    </div>
+                    <!-- end widget edit box -->
+
+                    <div class="widget-body no-padding">
+                        <div class="widget-body-toolbar"></div>
+                        <div id="product_list_table">
+                            <table id='product-table' class='table table-responsive talign_c table-striped table-bordered table-hover smart-form has-tickbox'>
+                                <thead id='product_thead' style="display: none;"></thead>
+                                <tbody id='product_tbody'>
+                                <tr class='odd'><td class='dataTables_empty' valign='top' colspan='9' style='border-width:0px;'><span><h3><i class='fa fa-cog fa-spin'></i>正在努力加载...</h3></span></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end widget -->
+
+        </article>
+        <!-- WIDGET END -->
+
+    </div>
+
+    <!-- end row -->
+
+    <!-- end row -->
+
+</section>
+<!-- end widget grid -->
+<!--新增产品-->
+<div id="product_add_modal" class="text-center" style="display:none;">
+    <form id="product-form">
+        <div class="input-group-product row">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">产品类型<span >*</span>：</span>
+            <section>
+                <label class="select col-lg-4 col-md-6 col-sm-8 col-xs-10">
+                    <select  id="productCat_type" name="productCat_type" style="width: 320px;margin-left:-10px;" onchange="changeProductCat()">
+                    </select>
+                </label>
+            </section>
+        </div>
+
+        <div class="input-group-product row">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">状态<span>*</span>：</span>
+            <section>
+                <label class="select col-lg-4 col-md-6 col-sm-8 col-xs-10">
+                    <select id="product_status" name="product_status" style="width: 320px;margin-left:-10px;">
+                        <option value="enable">启用</option>
+                        <option value="disable">禁用</option>
+                    </select>
+                </label>
+            </section>
+        </div>
+        <div class="input-group-product row basic">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">计费单位<span>*</span>：</span>
+            <input type="text" id="product_bill_unit_count" name="bill_unit_count  "  class="col-lg-4 col-md-6 col-sm-8 col-xs-10" placeholder="">
+        </div>
+        <div class="input-group-product row noCpuMem">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">计费最小值<span>*</span>：</span>
+            <input type="text" id="product_unit_count_min" name="unit_count_min " class="col-lg-4 col-md-6 col-sm-8 col-xs-10" placeholder="">
+        </div>
+
+        <div class="input-group-product row noCpuMem">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">计费最大值<span>*</span>：</span>
+            <input type="text"  id="product_unit_count_max" name="unit_count_max "  class="col-lg-4 col-md-6 col-sm-8 col-xs-10" placeholder="">
+        </div>
+        <div class="input-group-product row basic">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">价格<span>*</span>：</span>
+            <input type="text" id="product_price" name="price" class="col-lg-4 col-md-6 col-sm-8 col-xs-10" placeholder="">
+        </div>
+        <div class="input-group-product row">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">描述：</span>
+            <input type="text" id="product_description" name="description" class="col-lg-4 col-md-6 col-sm-8 col-xs-10" placeholder="">
+        </div>
+        <div class="input-group-product row bandWidth" style="display: none;">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">区间范围<span>*</span>：</span>
+            <!--<a id="create_product_band" onclick="addNOIP()" style="float:left;" class="btn btn-default" href="javascript:void(0);"><i class="fa fa-plus"></i></a>-->
+        </div>
+        <div id="band_test" style="display: none;" class="bandWidth">
+            <div class="input-group-product row" name="bandwidth-val">
+                <span class=" col-lg-3 col-md-3 col-sm-3 col-xs-2"></span>
+                <span class="" style="float: left;"></span><input type="text" name="band_min" class="col-lg-1 col-md-1 col-sm-1 col-xs-1" placeholder="Mbps"/>
+                <span class="" style="float: left;margin-left: 10px;margin-right: 10px;">-</span><input type="text" name="band_max" class="col-lg-1 col-md-1 col-sm-1 col-xs-1" placeholder="Mbps"/>
+                <span class=" col-lg-1 col-md-1 col-sm-1 col-xs-1 no-padding" style="float: left;">单价：</span><input type="text" name="band_price" class="col-lg-1 col-md-1 col-sm-1 col-xs-1" placeholder="元/Mbps"/>
+                <a id="create_product_band"  onclick="addNOIP()" class='btn btn-default' href='javascript:void(0);' style="float: left;margin-left: 10px;"><i class='fa fa-plus'></i></a>
+<!--
+                <a onclick='minusNo(this)' class='btn btn-default maint_del_noIp' href='javascript:void(0);' style="float: left;margin-left: 10px;"><i class='fa fa-plus'></i></a>
+-->
+            </div>
+        </div>
+
+        <div class="input-group-product row" style="padding-top: 20px;">
+            <span class="col-lg-5 col-md-5 col-sm-5 col-xs-7" style="padding-right:0;" ><a id="product_add_cancelBtn"  class="btn btn-default col-lg-3 col-md-3 col-sm-3 col-xs-3"  style="float:right;">取消</a></span>
+            <span class="col-lg-5 col-md-5 col-sm-5 col-xs-7" style="padding-left:10px;" ><a id="productBtn" onclick="addProduct();" class="btn btn-primary col-lg-3 col-md-3 col-sm-3 col-xs-3"  style="float:left;">新增</a></span>
+        </div>
+        <!--        <div class="modal-footer">
+                    <button type="button" id="host_d_close" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>-->
+        <div class="input-group-product row" style="padding-top: 0;"></div>
+    </form>
+
+</div>
+        <!--编辑产品-->
+<div id="product_edit_modal" class="text-center" style="display:none;">
+    <form id="product_edit-form">
+        <div class="input-group-product row">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">产品类型<span >*</span>：</span>
+            <section>
+                <label class="select col-lg-4 col-md-6 col-sm-8 col-xs-10">
+                    <select disabled="disabled" id="productCat_edit_type" name="productCat_type" style="width: 320px;margin-left:-10px;">
+                    </select>
+                </label>
+            </section>
+        </div>
+        <div class="input-group-product row">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">状态<span>*</span>：</span>
+            <section>
+                <label class="select col-lg-4 col-md-6 col-sm-8 col-xs-10">
+                    <select id="product_edit_status" name="product_status" style="width: 320px;margin-left:-10px;">
+                        <option value="enable">启用</option>
+                        <option value="disable">禁用</option>
+                    </select>
+                </label>
+            </section>
+        </div>
+        <div class="input-group-product row basic">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">计费单位<span>*</span>：</span>
+            <input type="text" id="product_edit_bill_unit_count" name="bill_unit_count  "  class="col-lg-4 col-md-6 col-sm-8 col-xs-10" placeholder="">
+        </div>
+        <div class="input-group-product row noCpuMem">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">计费最小值<span>*</span>：</span>
+            <input type="text" id="product_edit_unit_count_min" name="unit_count_min " class="col-lg-4 col-md-6 col-sm-8 col-xs-10" placeholder="">
+        </div>
+
+        <div class="input-group-product row noCpuMem">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">计费最大值<span>*</span>：</span>
+            <input type="text"  id="product_edit_unit_count_max" name="unit_count_max "  class="col-lg-4 col-md-6 col-sm-8 col-xs-10" placeholder="">
+        </div>
+        <div class="input-group-product row basic">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">价格<span>*</span>：</span>
+            <input type="text" id="product_edit_price" name="price" class="col-lg-4 col-md-6 col-sm-8 col-xs-10" placeholder="">
+        </div>
+        <div class="input-group-product row">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">描述：</span>
+            <input type="text" id="product_edit_description" name="description" class="col-lg-4 col-md-6 col-sm-8 col-xs-10" placeholder="">
+        </div>
+        <div class="input-group-product row bandWidth" style="display: none;">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">区间范围<span>*</span>：</span>
+        </div>
+        <div id="edit_band_test" style="display: none;" class="bandWidth">
+            <div class="input-group-product row" name="bandwidth-val">
+
+            </div>
+        </div>
+
+        <div class="input-group-product row" style="padding-top: 20px;">
+            <span class="col-lg-5 col-md-5 col-sm-5 col-xs-7" style="padding-right:0;" ><a id="product_edit_cancelBtn"  class="btn btn-default col-lg-3 col-md-3 col-sm-3 col-xs-3"  style="float:right;">取消</a></span>
+            <span class="col-lg-5 col-md-5 col-sm-5 col-xs-7" style="padding-left:10px;" ><a id="product_editBtn" class="btn btn-primary col-lg-3 col-md-3 col-sm-3 col-xs-3"  style="float:left;">编辑</a></span>
+        </div>
+        <!--        <div class="modal-footer">
+                    <button type="button" id="host_d_close" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>-->
+        <div class="input-group-product row" style="padding-top: 0;"></div>
+    </form>
+
+</div>
+<script type="text/javascript">
+
+    // DO NOT REMOVE : GLOBAL FUNCTIONS!
+    pageSetUp();
+
+    // PAGE RELATED SCRIPTS
+
+    productloadDataTableScripts();
+
+    function productloadDataTableScripts() {
+        loadScript("../../static/js/plugin/datatables/jquery.dataTables-cust.js", dt_2);
+
+        function dt_2() {
+            loadScript("../../static/js/plugin/datatables/ColReorder.min.js", dt_3);
+        }
+
+        function dt_3() {
+            loadScript("../../static/js/plugin/datatables/FixedColumns.min.js", dt_4);
+        }
+
+        function dt_4() {
+            loadScript("../../static/js/plugin/datatables/ColVis.min.js", dt_5);
+        }
+
+        function dt_5() {
+            loadScript("../../static/js/plugin/datatables/ZeroClipboard.js", dt_6);
+        }
+
+        function dt_6() {
+            loadScript("../../static/js/plugin/datatables/media/js/TableTools.min.js", dt_7);
+        }
+
+        function dt_7() {
+            loadScript("../../static/js/plugin/datatables/DT_bootstrap.js", dt_8);
+        }
+        function dt_8() {
+            loadScript("../../static/js/cniaas/product.js", productInit);
+        }
+
+    }
+
+    function productInit(){
+        //初始化表格
+        loadproductTable();
+        $("#btn_product_refresh").on("click",function (){
+
+        });
+
+        //删除
+        $("#btn_product_delete").unbind("click");
+        $('#btn_product_delete').on("click",function(){});
+        //新增
+        $("#btn_product_create").on("click",function(){
+            initProductCat(function(){
+                changeProductCat();
+            });
+            clearForm("product_add");
+            $("#product_add_modal").show().siblings().hide();
+
+        });
+        //新增取消
+        $("#product_add_cancelBtn").on("click",function(){
+            loadproductTable();
+            $("#product_widget-grid").show().siblings().hide();
+            $("#product_btns").show();
+
+        });
+        $("#btn_product_edit").on("click",function(){
+            //获取详情
+            doPost("/action/product/detail",{productId:sel_product_id},function(objs){
+                if(objs.httpCode=="200"){
+                    var productCat = document.getElementById("productCat_edit_type").options;
+                    $("#product_edit_description").val(objs.data.description);
+                    $("#product_edit_status").attr("value",objs.data.status);
+                    clearOptions(productCat);
+                    addOption(productCat, objs.data.productCat.name, objs.data.productCat.id);
+                   // $("#productCat_edit_type").attr("value",objs.data.productCat.innerName);
+
+                    if(objs.data.productCat.innerName=="bandwidth"){
+                        $("#product_edit_modal .bandWidth").show();
+                        $("#product_edit_modal .basic,#product_edit_modal .noCpuMem").hide();
+                        var str="";
+                        for(var i=0;i<objs.datas.length;i++){
+                            if(i==0){
+                                str+='<div class="input-group-product row " name="bandwidth-val">'+
+                                        '<span class=" col-lg-3 col-md-3 col-sm-3 col-xs-2"></span>'+
+                                        '<span style="float: left;"></span><input type="text" name="band_min" class="col-lg-1 col-md-1 col-sm-1 col-xs-1"  placeholder="Mbps" value="'+objs.datas[i].unitCountMin+'">'+
+                                        '<span class="" style="float: left;margin-left: 10px;margin-right: 10px;">-</span></span><input type="text" name="band_max" class="col-lg-1 col-md-1 col-sm-1 col-xs-1"  placeholder="Mbps" value="'+objs.datas[i].unitCountMax+'">'+
+                                        '<span class=" col-lg-1 col-md-1 col-sm-1 col-xs-1 no-padding" style="float: left;">单价：</span><input type="text" name="band_price" class="col-lg-1 col-md-1 col-sm-1 col-xs-1" placeholder="元/Mbps" value="'+objs.datas[i].price+'">'+
+                                        '<a id="edit_product_band" onclick="editNOIP()" style="float:left;margin-left: 10px;" class="btn btn-default" href="javascript:void(0);"><i class="fa fa-plus"></i></a></div>';
+
+                            }else if(i==(objs.datas.length-1)){
+                                str+='<div class="input-group-product row " name="bandwidth-val">'+
+                                        '<span class=" col-lg-3 col-md-3 col-sm-3 col-xs-2"></span>'+
+                                        '<span style="float: left;"></span><input type="text" name="band_min" class="col-lg-1 col-md-1 col-sm-1 col-xs-1"  placeholder="Mbps" value="'+objs.datas[i].unitCountMin+'"/>'+
+                                        '<span class="" style="float: left;margin-left: 10px;margin-right: 10px;">-</span><input type="text" name="band_max" class="col-lg-1 col-md-1 col-sm-1 col-xs-1"  placeholder="Mbps" value="'+objs.datas[i].unitCountMax+'"/>'+
+                                        '<span class=" col-lg-1 col-md-1 col-sm-1 col-xs-1 no-padding" style="float: left;">单价：</span><input type="text" name="band_price" class="col-lg-1 col-md-1 col-sm-1 col-xs-1"  placeholder="元/Mbps" value="'+objs.datas[i].price+'"/>'+
+                                        "<a onclick='minusNo(this)' class='btn btn-default maint_del_noIp' href='javascript:void(0);'  style='float: left;margin-left: 10px;'><i class='fa fa-minus'></i></a></div>";
+                            }else{
+                                str+='<div class="input-group-product row " name="bandwidth-val">'+
+                                        '<span class=" col-lg-3 col-md-3 col-sm-3 col-xs-2"></span>'+
+                                        '<span style="float: left;"></span><input type="text" name="band_min" class="col-lg-1 col-md-1 col-sm-1 col-xs-1"  placeholder="Mbps" value="'+objs.datas[i].unitCountMin+'">'+
+                                        '<span class="" style="float: left;margin-left: 10px;margin-right: 10px;">-</span></span><input type="text" name="band_max" class="col-lg-1 col-md-1 col-sm-1 col-xs-1"  placeholder="Mbps" value="'+objs.datas[i].unitCountMax+'">'+
+                                        '<span class=" col-lg-1 col-md-1 col-sm-1 col-xs-1 no-padding" style="float: left;">单价：</span><input type="text" name="band_price" class="col-lg-1 col-md-1 col-sm-1 col-xs-1" placeholder="元/Mbps" value="'+objs.datas[i].price+'"></div>';
+                            }
+                        }
+                        $("#edit_band_test").empty().append(str);
+                    }else if((objs.data.productCat.innerName=="cpu") || (objs.data.productCat.innerName=="mem") || (objs.data.productCat.innerName=="snapshot")){
+                        $("#product_edit_modal .bandWidth,#product_edit_modal .noCpuMem").hide();
+                        $("#product_edit_modal .basic").show();
+                    }else{
+                        $("#product_edit_modal .bandWidth,#product_edit_modal .basic").hide();
+                        $("#product_edit_modal .noCpuMem").show();
+                    }
+                    $("#product_edit_modal").show().siblings().hide();
+                    $("#product_edit_bill_unit_count").val(objs.data.billUnitCount);
+                    $("#product_edit_unit_count_min").val(objs.data.unitCountMin);
+                    $("#product_edit_unit_count_max").val(objs.data.unitCountMax);
+                    $("#product_edit_price").val(objs.data.price);
+                }else{
+                    console.log("code :" + objs.code + "  msg:" + objs.message);
+                    showErrorMsg("","code :" + objs.code + "  msg:" + objs.message);
+                }
+            });
+
+        });
+        //编辑取消
+        $("#product_edit_cancelBtn").on("click",function(){
+            loadproductTable();
+            $("#product_widget-grid").show().siblings().hide();
+            $("#product_btns").show();
+
+        });
+       //编辑
+        $("#product_editBtn").on("click",function(){
+            var productCat_edit_type = $.trim($("#productCat_edit_type").val());
+            var status = $.trim($("#product_edit_status").val());
+            var billUnitCount = $.trim($("#product_edit_bill_unit_count").val());
+            var unitCountMin = $.trim($("#product_edit_unit_count_min").val());
+            var unitCountMax = $.trim($("#product_edit_unit_count_max").val());
+            var price = $.trim($("#product_edit_price").val());
+            var description = $.trim($("#product_edit_description").val());
+
+            var units="";
+            if(typeof($("#productCat_edit_type option:selected").text())==typeof("bandwidth")){
+                $('#edit_band_test div[name^="bandwidth-val"]').each(function (){
+                    var min=$(this).find('input[name^="band_min"]').val();
+                    var max=$(this).find('input[name^="band_max"]').val();
+                    var band_price=$(this).find('input[name^="band_price"]').val();
+                    units+=min+","+max+","+band_price+";";
+                });
+            }
+
+            var data = {productId: sel_product_id,status:status ,regionId: "5eeb1925-e5de-4ea6-9323-30b622eaf351" ,billUnitCount: billUnitCount,price: price ,unitCountMin: unitCountMin ,unitCountMax: unitCountMax,description:description,units:units};
+            //   $("#productBtn").removeClass('btn-primary').addClass("disabled").addClass('txt-color-darken');
+            doPost("/action/product/edit",data,function(objs){
+                if(objs.httpCode=="200"){
+                    showMsg("温馨提示","编辑成功。");
+                    loadproductTable();
+                    $("#product_widget-grid").show().siblings().hide();
+                    $("#product_btns").show();
+                }else{
+                    console.log("code :" + objs.code + "  msg:" + objs.message);
+                    showErrorMsg("","code :" + objs.code + "  msg:" + objs.message);
+                }
+            });
+
+        });
+
+        //点击tr赋值
+    }
+    var all_product_data = null;
+    //点击tr赋值
+
+    function productTableTrClick(){
+        $('#product-table').delegate('tr', 'click', function(event){
+            all_product_data = null;
+            all_product_data = productTable.fnGetData( this );
+        });
+    }
+    function addNOIP(){
+        $("#band_test .maint_del_noIp").remove();
+        var str="";
+        str+='<div class="input-group-product row " name="bandwidth-val">'+
+        '<span class=" col-lg-3 col-md-3 col-sm-3 col-xs-2"></span>'+
+        '<span  style="float: left;"></span><input type="text" name="band_min" class="col-lg-1 col-md-1 col-sm-1 col-xs-1" placeholder="Mbps">'+
+        '<span class="" style="float: left;margin-left: 10px;margin-right: 10px;">-</span></span><input type="text" name="band_max" class="col-lg-1 col-md-1 col-sm-1 col-xs-1" placeholder="Mbps">'+
+        '<span class=" col-lg-1 col-md-1 col-sm-1 col-xs-1 no-padding" style="float: left;">单价：</span><input type="text" name="band_price" class="col-lg-1 col-md-1 col-sm-1 col-xs-1" placeholder="元/Mbps">'+
+        "<a onclick='minusNo(this)' class='btn btn-default maint_del_noIp' href='javascript:void(0);'  style='float: left;margin-left: 10px;'><i class='fa fa-minus'></i></a>";
+        $('#band_test').append(str);
+     //   $("#btn_maint_confirm").addClass("txt-color-darken").addClass("disabled").removeClass("btn-primary");
+    }
+    function editNOIP(){
+        $("#edit_band_test .maint_del_noIp").remove();
+        var str="";
+        str+='<div class="input-group-product row " name="bandwidth-val">'+
+                '<span class=" col-lg-3 col-md-3 col-sm-3 col-xs-2"></span>'+
+                '<span style="float: left;"></span><input type="text" name="band_min" class="col-lg-1 col-md-1 col-sm-1 col-xs-1" placeholder="Mbps">'+
+                '<span class="" style="float: left;margin-left: 10px;margin-right: 10px;">-</span></span><input type="text" name="band_max" class="col-lg-1 col-md-1 col-sm-1 col-xs-1" placeholder="Mbps">'+
+                '<span class=" col-lg-1 col-md-1 col-sm-1 col-xs-1 no-padding" style="float: left;">单价：</span><input type="text" name="band_price" class="col-lg-1 col-md-1 col-sm-1 col-xs-1" placeholder="元/Mbps">'+
+                "<a onclick='minusNo(this)' class='btn btn-default maint_del_noIp' href='javascript:void(0);'  style='float: left;margin-left: 10px;'><i class='fa fa-minus'></i></a>";
+        $('#edit_band_test').append(str);
+    }
+    function minusNo(obj){
+        var a = document.getElementById("band_test").getElementsByTagName("div");
+        if(a.length>2){
+            $(obj).parent().prev().append("<a onclick='minusNo(this)' class='btn btn-default maint_del_noIp' href='javascript:void(0);'  style='float: left;margin-left: 10px;'><i class='fa fa-minus'></i></a>");
+        }
+        var b = document.getElementById("edit_band_test").getElementsByTagName("div");
+        if(b.length>2){
+            $(obj).parent().prev().append("<a onclick='minusNo(this)' class='btn btn-default maint_del_noIp' href='javascript:void(0);'  style='float: left;margin-left: 10px;'><i class='fa fa-minus'></i></a>");
+        }
+        $(obj).parent().remove();
+
+    }
+    function changeProductCat(){
+        var val=$("#productCat_type option:selected").text();
+        console.log(val);
+        if(val=="bandwidth"){
+            console.log(1);
+            $("#product_add_modal .basic").hide();
+            $("#product_add_modal .bandwidth").show();
+            $("#product_add_modal .noCpuMem").hide();
+        }else if(val=="mem"){
+            console.log(2);
+            $("#product_add_modal .bandwidth").hide();
+            $("#product_add_modal .basic").show();
+            $("#product_add_modal .noCpuMem").hide();
+        }else if(val=="cpu"){
+            console.log(3);
+            $("#product_add_modal .bandwidth").hide();
+            $("#product_add_modal .basic").show();
+            $("#product_add_modal .noCpuMem").hide();
+        }else if(val=="snapshot"){
+            console.log(4);
+            $("#product_add_modal .bandwidth").hide();
+            $("#product_add_modal .basic").show();
+            $("#product_add_modal .noCpuMem").hide();
+        }else{
+            console.log(5);
+            $("#product_add_modal .bandwidth").hide();
+            $("#product_add_modal .basic").show();
+            $("#product_add_modal .noCpuMem").hide();
+        }
+    }
+</script>

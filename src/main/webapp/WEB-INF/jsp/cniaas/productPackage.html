@@ -1,0 +1,492 @@
+<!-- 按钮 -->
+<div id="productPackage_btns" class="row margin-bottom-5 col-sm-12 col-xs-12 col-md-12 col-lg-12">
+    <a id="btn_productPackage_refresh" class="btn btn-default" href="javascript:void(0);" onclick="loadproductPackageTable()"><i class="fa fa-refresh"></i> 刷新</a>
+    <a id="btn_productPackage_create"  class="btn btn-success"  pname="customer_add" data-toggle="modal" data-target="#productPackage_oper_modal" href="#" ><i class="fa fa-plus"></i> 新增</a>
+    <a id="btn_productPackage_edit"  class="btn btn-default disabled"  pname="customer_update"  ><i class="fa fa-plus"></i> 编辑</a>
+    <a id="btn_productPackage_delete"  class="btn btn-default disabled"  pname="customer_delete"  href="javascript:void(0);"><i class="fa fa-trash-o"></i> 删除</a>
+</div>
+<!-- 按钮 -->
+<!-- widget grid -->
+<section id="productPackage_widget-grid" class="">
+
+    <!-- row -->
+    <div class="row">
+
+        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-2-productPackage" data-widget-editbutton="false">
+
+
+                <!-- widget div-->
+                <div>
+                    <!-- widget edit box -->
+                    <div class="jarviswidget-editbox">
+                        <!-- This area used as dropdown edit box -->
+                    </div>
+                    <!-- end widget edit box -->
+
+                    <div class="widget-body no-padding">
+                        <div class="widget-body-toolbar">
+                        </div>
+                        <div id="productPackage_list_table">
+                            <table id='productPackage-table' class='table table-responsive talign_c table-striped table-bordered table-hover smart-form has-tickbox'>
+                                <thead id='productPackage_thead' style="display: none;"></thead>
+                                <tbody id='productPackage_tbody'>
+                                <tr class='odd'><td class='dataTables_empty' valign='top' colspan='9' style='border-width:0px;'><span><h3><i class='fa fa-cog fa-spin'></i>正在努力加载...</h3></span></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end widget -->
+
+        </article>
+        <!-- WIDGET END -->
+
+    </div>
+
+    <!-- end row -->
+
+    <!-- end row -->
+
+</section>
+<!-- end widget grid -->
+<div id="productPackage_add_modal" class="text-center" style="display: none;" >
+    <form id="productPackage-form">
+
+    <div class="input-group-productPackage row basic">
+        <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">名称<span>*</span>：</span>
+        <input type="text" id="productPackage_name" name="price" class="col-lg-4 col-md-6 col-sm-8 col-xs-10" placeholder="">
+    </div>
+        <div class="input-group-productPackage row">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">状态<span>*</span>：</span>
+            <section>
+                <label class="select col-lg-4 col-md-6 col-sm-8 col-xs-10">
+                    <select id="productPackage_status" name="productPackage_status" style="width: 320px;margin-left:-10px;">
+                        <option value="enable">启用</option>
+                        <option value="disable">禁用</option>
+                    </select>
+                </label>
+            </section>
+        </div>
+        <!-- CPU S -->
+        <div class="row offset-top">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">CPU<span>*</span>：</span>
+            <div class="column col-lg-9 col-md-9 col-sm-9 col-xs-10  no-padding">
+                <div class="row-li">
+                    <span id="uc-cpu" class="uc-radio" style="text-align:left;float: left;"></span>
+                    <input value="1" name="" class="uc-cpu" type="hidden" id="uc-cpu-hidden">
+                </div>
+            </div>
+        </div>
+        <!-- CPU E -->
+        <!-- 内存 S -->
+        <div class="row offset-top">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">内存<span>*</span>：</span>
+            <div class="column  col-lg-9 col-md-9 col-sm-9 col-xs-10  no-padding">
+                <div class="row-li">
+                    <span id="uc-ram" class="uc-radio" style="text-align:left;float: left;"></span>
+                    <input value="512" name="" class="uc-ram" type="hidden" id="uc-ram-hidden">
+                </div>
+            </div>
+        </div>
+        <!-- 内存 E -->
+        <!-- 带宽 S -->
+        <div class="row offset-top">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">公网带宽：</span>
+            <div class="column">
+                <div class="row-li">
+                                <span id="uc-band" class="uc-slider">
+                                    <div class="range">
+                                        <span class="block w50">
+                                            <div>
+                                                <span>5M</span></div>
+                                        </span><span class="block w25">
+                                            <div>
+                                                <span>50M</span></div>
+                                        </span><span class="block w25">
+                                            <div class="last">
+                                                <span>100M</span></div>
+                                        </span>
+                                        <div class="container">
+                                            <div class="current">
+                                                <span class="unit">
+                                                    <div>
+                                                        <span>5M</span></div>
+                                                </span><span class="unit">
+                                                    <div>
+                                                        <span>50M</span></div>
+                                                </span><span class="unit">
+                                                    <div class="last">
+                                                        <span>100M</span></div>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <a href="javascript:;" class="drag" hidefocus="" id="test"><i></i><i></i><i></i>
+                                        </a>
+                                    </div>
+                                </span>
+                    <input class="uc-band uc-input c-f60" name="" maxlength="3" value="1" id="uc-band-value">
+                    <span class="band-unit">Mbps</span>
+                </div>
+            </div>
+        </div>
+        <!-- 带宽 E -->
+        <!-- 硬盘大小S -->
+        <div class="row offset-top">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">硬盘大小：</span>
+            <div class="column">
+                <div class="row-li">
+                                <span id="hard-disk" class="uc-slider" style=width:416px;"">
+                                    <div class="range">
+                                        <span class="block w50">
+                                            <div>
+                                                <span>100G</span></div>
+                                        </span><span class="block w25">
+                                            <div>
+                                                <span>250G</span></div>
+                                        </span><span class="block w25">
+                                            <div class="last">
+                                                <span>500G</span></div>
+                                        </span>
+                                        <div class="container">
+                                            <div class="current">
+                                                <span class="unit">
+                                                    <div>
+                                                        <span>100G</span></div>
+                                                </span><span class="unit">
+                                                    <div>
+                                                        <span>250G</span></div>
+                                                </span><span class="unit">
+                                                    <div class="last">
+                                                        <span>500G</span></div>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <a href="javascript:;" class="drag" hidefocus=""><i></i><i></i><i></i></a>
+                                    </div>
+                                </span>
+                    <input class="uc-band uc-input c-f60" name="" maxlength="3" value="1" id="hard-disk-value">
+                    <span class="band-unit">GB</span>
+                </div>
+            </div>
+        </div>
+        <!-- 硬盘大小 E -->
+    <!--    <div class="input-group-productPackage row basic">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">快照：</span>
+            <input type="text" id="productPackage_snap" name="price" class="col-lg-4 col-md-6 col-sm-8 col-xs-10" placeholder="">
+        </div>-->
+        <!-- 周期 S -->
+        <div class="row offset-top">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">周期<span>*</span>：</span>
+            <div class="column">
+                            <span id="uc-duration" class="uc-slider duration">
+                                <div class="range">
+                                    <span class="block mm">
+                                        <div>
+                                            <span>1</span>
+                                        </div>
+                                    </span><span class="block mm">
+                                        <div>
+                                            <span>2</span>
+                                        </div>
+                                    </span><span class="block mm">
+                                        <div>
+                                            <span>3</span>
+                                        </div>
+                                    </span><span class="block mm">
+                                        <div>
+                                            <span>4</span>
+                                        </div>
+                                    </span><span class="block mm">
+                                        <div>
+                                            <span>5</span>
+                                        </div>
+                                    </span><span class="block mm">
+                                        <div>
+                                            <span>6</span>
+                                        </div>
+                                    </span><span class="block mm">
+                                        <div>
+                                            <span>7</span>
+                                        </div>
+                                    </span><span class="block mm">
+                                        <div>
+                                            <span>8</span>
+                                        </div>
+                                    </span><span class="block mm">
+                                        <div>
+                                            <span>9</span>
+                                        </div>
+                                    </span><span class="block mm">
+                                        <div>
+                                            <i></i><span>10</span>
+                                        </div>
+                                    </span><span class="block mm">
+                                        <div>
+                                            <i></i><span>11</span>
+                                        </div>
+                                    </span><span class="block yy">
+                                        <div>
+                                            <span>1年</span>
+                                        </div>
+                                    </span><span class="block yy">
+                                        <div>
+                                            <span>2年</span>
+                                        </div>
+                                    </span><span class="block yy">
+                                        <div class="last">
+                                            <span>3年</span>
+                                        </div>
+                                    </span>
+                                    <div class="container">
+                                        <div class="current">
+                                            <span class="unit">
+                                                <div>
+                                                    <i></i><span>1</span>
+                                                </div>
+                                            </span><span class="unit">
+                                                <div>
+                                                    <i></i><span>2</span>
+                                                </div>
+                                            </span><span class="unit">
+                                                <div>
+                                                    <i></i><span>3</span>
+                                                </div>
+                                            </span><span class="unit">
+                                                <div>
+                                                    <i></i><span>4</span>
+                                                </div>
+                                            </span><span class="unit">
+                                                <div>
+                                                    <i></i><span>5</span>
+                                                </div>
+                                            </span><span class="unit">
+                                                <div>
+                                                    <i></i><span>6</span>
+                                                </div>
+                                            </span><span class="unit">
+                                                <div>
+                                                    <i></i><span>7</span>
+                                                </div>
+                                            </span><span class="unit">
+                                                <div>
+                                                    <i></i><span>8</span>
+                                                </div>
+                                            </span><span class="unit">
+                                                <div>
+                                                    <i></i><span>9</span>
+                                                </div>
+                                            </span><span class="unit">
+                                                <div>
+                                                    <i></i><span>10</span>
+                                                </div>
+                                            </span><span class="unit">
+                                                <div>
+                                                    <i></i><span>11</span>
+                                                </div>
+                                            </span><span class="unit">
+                                                <div>
+                                                    <span>1年</span>
+                                                </div>
+                                            </span><span class="unit">
+                                                <div>
+                                                    <span>2年</span>
+                                                </div>
+                                            </span><span class="unit">
+                                                <div class="last">
+                                                    <span>3年</span>
+                                                </div>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <a href="javascript:;" target="_self" rel="nofollow" class="drag" hidefocus><i></i><i>
+                                    </i><i></i></a>
+                                </div>
+                            </span>
+                <input class="uc-duration" type="hidden" value="12" id="uc-duration-value" />
+            </div>
+        </div>
+        <div class="input-group-productPackage row basic">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">价格<span>*</span>：</span>
+            <input type="text" id="productPackage_price" name="price" class="col-lg-4 col-md-6 col-sm-8 col-xs-10" placeholder="">
+        </div>
+        <div class="input-group-productPackage row basic">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">描述：</span>
+            <input type="text" id="productPackage_description" name="price" class="col-lg-4 col-md-6 col-sm-8 col-xs-10" placeholder="">
+        </div>
+<!--        <div class="input-group-productPackage row basic">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">计费单位<span>*</span>：</span>
+            <input type="text" id="productPackage_bill_unit_count" name="bill_unit_count  "  class="col-lg-4 col-md-6 col-sm-8 col-xs-10" placeholder="">
+        </div>
+        <div class="input-group-productPackage row basic">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">计费最小值<span>*</span>：</span>
+            <input type="text" id="productPackage_unit_count_min" name="unit_count_min " class="col-lg-4 col-md-6 col-sm-8 col-xs-10" placeholder="">
+        </div>
+
+        <div class="input-group-productPackage row basic">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">计费最大值<span>*</span>：</span>
+            <input type="text"  id="productPackage_unit_count_max" name="unit_count_max "  class="col-lg-4 col-md-6 col-sm-8 col-xs-10" placeholder="">
+        </div>
+
+        <div class="input-group-productPackage row">
+            <span class="input-group-addon-text col-lg-3 col-md-3 col-sm-3 col-xs-2">描述：</span>
+            <input type="text" id="productPackage_description" name="description" class="col-lg-4 col-md-6 col-sm-8 col-xs-10" placeholder="">
+        </div>-->
+
+        <div class="input-group-productPackage row" style="padding-top: 20px;">
+            <span class="col-lg-5 col-md-5 col-sm-5 col-xs-7" style="padding-right:0;" ><a id="productPackage_add_cancelBtn"  class="btn btn-default col-lg-3 col-md-3 col-sm-3 col-xs-3"  style="float:right;">取消</a></span>
+            <span class="col-lg-5 col-md-5 col-sm-5 col-xs-7" style="padding-left:10px;" ><a id="productPackageBtn" class="btn btn-primary col-lg-3 col-md-3 col-sm-3 col-xs-3"  style="float:left;">新增</a></span>
+            <span class="col-lg-5 col-md-5 col-sm-5 col-xs-7" style="padding-left:10px;" ><a id="productPackage_editBtn" class="btn btn-primary col-lg-3 col-md-3 col-sm-3 col-xs-3"  style="display:none;float:left;">编辑</a></span>
+        </div>
+        <!--        <div class="modal-footer">
+                    <button type="button" id="host_d_close" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>-->
+        <div class="input-group-productPackage row" style="padding-top: 0;"></div>
+    </form>
+
+</div>
+
+
+<script type="text/javascript">
+
+    // DO NOT REMOVE : GLOBAL FUNCTIONS!
+    pageSetUp();
+
+    // PAGE RELATED SCRIPTS
+
+    productPackageloadDataTableScripts();
+
+    function productPackageloadDataTableScripts() {
+        loadScript("../../static/js/plugin/datatables/jquery.dataTables-cust.js", dt_2);
+
+        function dt_2() {
+            loadScript("../../static/js/plugin/datatables/ColReorder.min.js", dt_3);
+        }
+
+        function dt_3() {
+            loadScript("../../static/js/plugin/datatables/FixedColumns.min.js", dt_4);
+        }
+
+        function dt_4() {
+            loadScript("../../static/js/plugin/datatables/ColVis.min.js", dt_5);
+        }
+
+        function dt_5() {
+            loadScript("../../static/js/plugin/datatables/ZeroClipboard.js", dt_6);
+        }
+
+        function dt_6() {
+            loadScript("../../static/js/plugin/datatables/media/js/TableTools.min.js", dt_7);
+        }
+
+        function dt_7() {
+            loadScript("../../static/js/plugin/datatables/DT_bootstrap.js", dt_8);
+        }
+        function dt_8() {
+            loadScript("../../static/js/libs/underscore-min.js", dt_9);
+        }
+        function dt_9() {
+            loadScript("../../static/js/libs/jquery.event.drag-2.2.js", dt_10);
+        }
+        function dt_10() {
+            loadScript("../../static/js/cniaas/productPackage.js", productPackageInit);
+        }
+
+    }
+
+    function productPackageInit(){
+        //初始化表格
+        loadproductPackageTable();
+        $("#btn_productPackage_refresh").on("click",function (){
+
+        });
+
+        //删除
+        $('#btn_productPackage_delete').on("click",function(){
+            doPost("/action/productPackage/delete", {productPackageId:sel_productPackage_id}, function (objs) {
+                if(objs.httpCode == "200"){
+                    showMsg("温馨提示","删除成功");
+                    $("#productPackage_widget-grid").show().siblings().hide();
+                    $("#productPackage_btns").show();
+                    loadproductPackageTable();
+                }else{
+                    console.log("code :" + objs.code + "  msg:" + objs.message);
+                    showErrorMsg("","code :" + objs.code + "  msg:" + objs.message);
+                }
+            });
+        });
+        //新增
+        $("#btn_productPackage_create").on("click",function(){
+            $("#uc-cpu a[data-value='1']").addClass("current").siblings().removeClass("current");
+            $("#uc-ram a[data-value='2']").addClass("current").siblings().removeClass("current");
+            $("#hard-disk-value").val(10);
+            $("#uc-band-value").val(1);
+            $("#productPackageBtn").show();
+            $("#productPackage_editBtn").hide();
+            clearForm("productPackage_add");
+            $("#productPackage_add_modal").show().siblings().hide();
+            loadScript("../../static/js/cniaas/productPackageAdd.js");
+        });
+        $("#btn_productPackage_edit").on("click",function(){
+            $("#productPackageBtn").hide();
+            $("#productPackage_editBtn").show();
+            clearForm("product_add");
+            loadScript("../../static/js/cniaas/productPackageAdd.js");
+            doPost("/action/productPackage/detail",{productPackageId:sel_productPackage_id},function(objs){
+                if(objs.httpCode=="200"){
+                    $("#productPackage_add_modal").show().siblings().hide();
+                    loadScript("../../static/js/libs/jquery.event.drag-2.2.js");
+                    loadScript("../../static/js/libs/underscore-min.js");
+                    loadScript("../../static/js/cniaas/productPackage.js");
+                    $("#productPackage_name").val(objs.data.name);
+                    $("#productPackage_price").val(objs.data.totalPrice);
+                    $("#productPackage_description").val(objs.data.description);
+                    $("#productPackage_status").attr("value",objs.data.status);
+                    if(convertStr(objs.data.cpu)==""){
+                        $("#uc-cpu a[data-value='1']").addClass("current").siblings().removeClass("current");
+                    }else{
+                        $("#uc-cpu a[data-value='"+objs.data.cpu+"']").addClass("current").siblings().removeClass("current");
+                    }
+                    if(convertStr(objs.data.mem)==""){
+                        $("#uc-ram a[data-value='2']").addClass("current").siblings().removeClass("current");
+                    }else{
+                        $("#uc-ram a[data-value='"+objs.data.mem+"']").addClass("current").siblings().removeClass("current");
+                    }
+                    if(objs.data.bandwidth>1){
+                        $("#uc-band-value").val(objs.data.bandwidth);
+                    }else{
+                        $("#uc-band-value").val(1);
+                    }
+                    if(objs.data.disk>1){
+                        $("#hard-disk-value").val(objs.data.disk);
+                    }else{
+                        $("#hard-disk-value").val(10);
+                    }
+
+                }else{
+                    console.log("code :" + objs.code + "  msg:" + objs.message);
+                    showErrorMsg("","code :" + objs.code + "  msg:" + objs.message);
+                }
+            });
+        });
+        //新增取消
+        $("#productPackage_add_cancelBtn").on("click",function(){
+            //loadproductTable();
+            $("#productPackage_widget-grid").show().siblings().hide();
+            $("#productPackage_btns").show();
+
+        });
+
+    }
+    var all_productPackage_data = null;
+    //点击tr赋值
+
+    function productTableTrClick(){
+        $('#productPackage-table').delegate('tr', 'click', function(event){
+            all_productPackage_data = null;
+            all_productPackage_data = productPackageTable.fnGetData( this );
+        });
+    }
+</script>
