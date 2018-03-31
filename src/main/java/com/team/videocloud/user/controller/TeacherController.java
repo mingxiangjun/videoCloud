@@ -36,7 +36,6 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping(value = "/teacher")
-//@SessionAttributes(Constants.SESSION_ID)
 public class TeacherController {
 
     private final Logger logger = LoggerFactory.getLogger(TeacherController.class);

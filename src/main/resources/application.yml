@@ -3,6 +3,16 @@ server:
   servlet:
     context-path: /
 spring:
+  thymeleaf:
+    cache: false
+    check-template-location: true
+    servlet:
+      content-type: text/html
+    enabled: true
+    encoding: utf-8
+    mode: HTML5
+    prefix: classpath:/static/
+    suffix: .html
   jpa:
     database: mysql
     show-sql: true
@@ -15,6 +25,14 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: root
+  devtools:
+    restart:
+      enabled: true
+      exclude: META-INF/maven/**,META-INF/resources/**,resources/**,static/**,public/**,templates/**,**/*Test.class,**/*Tests.class,git.properties,META-INF/build-info.properties
+netease:
+  public:
+    appKey: c1714073ebc3c45e4cd96c2183f84ef1
+    appSecret: 3a77c6017b29
 logging:
   level:
     root: debug
