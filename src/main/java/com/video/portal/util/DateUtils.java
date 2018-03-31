@@ -41,7 +41,8 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 
 
     /**
-     * Cloudstack 特定时间格式转换
+     * Cloudstack 特定时间格式转换</br>
+     * 默认时间格式："yyyy-MM-dd'T'HH:mm:ssz"
      * @param created
      * @return
      */
@@ -102,7 +103,8 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     }
 
     /**
-     * 根据日期格式字符串解析日期字符串
+     * 根据日期格式字符串解析日期字符串<br/>
+     * 默认日期格式：yyyy-MM-dd HH:mm:ss
      * @param str
      * @return
      * @throws ParseException
