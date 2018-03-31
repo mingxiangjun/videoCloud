@@ -1,5 +1,9 @@
 package com.team.videocloud.user.from;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
@@ -9,26 +13,13 @@ import java.io.Serializable;
  * Date: 2018/3/29
  * Description:
  */
+@Getter
+@Setter
+@Accessors
 public class UserEditPwdForm implements Serializable{
 
     @NotNull(message = "密码不能为空")
     private String password;
     @NotNull(message = "原密码不能为空")
     private String oldPassword;
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getOldPassword() {
-        return oldPassword;
-    }
-
-    public void setOldPassword(String oldPassword) {
-        this.oldPassword = oldPassword;
-    }
 }

@@ -1,6 +1,6 @@
 package com.team.videocloud.user.from;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import javax.validation.constraints.NotEmpty;
 
 /**
  * Copyright：DR Technology (Beijing) CO.,LTD
@@ -9,10 +9,6 @@ import org.hibernate.validator.constraints.NotEmpty;
  * Description:
  */
 public class UserLoginForm {
-
-  //  @Size(min = 2, max = 20, message = "名称不能少于2个字符并超过20个字")
-/*    @NotNull(message = "用户名称不能为空")
-    private String email;*/
 
     @NotEmpty(message = "用户名称不能为空")
     private String user;
