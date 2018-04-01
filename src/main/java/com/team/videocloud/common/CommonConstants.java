@@ -12,6 +12,34 @@ public final class CommonConstants {
 
     public final static String SESSION_ID = "d5uf9pl0c6";
     public static final String RANDOM_CODE = "RANDOMVALIDATECODEKEY";
+
+    public enum Status{
+        SUCCESS_STATUS(200,"操作成功"),
+        FAIL_IDENTIFYFAIL(409,"用户登录认证失败"),
+        FIAL_DELETE ( 603,"频道删除失败"),
+        FIAL_CREATE ( 604,"频道添加失败"),
+        FAIL_USER_NOT_EXIST(607,"用户信息不存在"),
+        FAIL_CHANNEL_EMPTY_NAME(610,"频道名称为空"),
+        FAIL_EXIST_CHANNEL_NAME(611,"频道名称已经存在"),
+        FAIL_INVALID_CHANNEL_TYPE(612,"频道类型错误"),
+        FAIL_INVALID_CHECKSUM(613,"CheckSum为空"),
+        FAIL_INVALID_APPKEY(614,"AppKey为空"),
+        FAIL_INVALID_CURTIME(615,"CurTime为空"),
+        FAIL_INVALID_ACCOUNT_STATUS(635,"服务未开通，请联系商务申请开通！");
+        private int code;
+        private String msg;
+        Status(int code,String msg){
+            this.code=code;
+            this.msg=msg;
+        }
+        public int getCode(){
+            return code;
+        }
+        public String getMsg(){
+            return msg;
+        }
+    }
+
     /**
      * 第三方云直播平台域名
      */

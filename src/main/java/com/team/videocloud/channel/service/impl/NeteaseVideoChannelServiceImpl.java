@@ -1,6 +1,20 @@
 package com.team.videocloud.channel.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
+import com.team.videocloud.channel.dao.ChannelDao;
+import com.team.videocloud.channel.po.Channel;
 import com.team.videocloud.channel.service.ChannelService;
+import com.team.videocloud.common.CommonConstants;
+import com.team.videocloud.common.config.NetEaseVidoeConfig;
+import com.team.videocloud.wangyi.util.CheckSumBuilder;
+import lombok.extern.apachecommons.CommonsLog;
+import org.apache.http.Consts;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,7 +29,12 @@ import java.util.Map;
  * @create 2018-03-31 18:13
  */
 @Service(value = "neteaseVideoChannelService")
+@CommonsLog
 public class NeteaseVideoChannelServiceImpl implements ChannelService{
+    @Autowired
+    private NetEaseVidoeConfig netEaseVidoeConfig;
+    @Autowired
+    private ChannelDao channelDao;
     /**
      * 创建频道
      *
@@ -24,8 +43,37 @@ public class NeteaseVideoChannelServiceImpl implements ChannelService{
      * @return
      */
     @Override
-    public boolean createChannel(String name, int type) {
-        return false;
+    public Channel createChannel(String name, int type) {
+        JSONObject params = new JSONObject();
+        params.put("name",name);
+        params.put("type",type);
+        JSONObject result = getRemoteProcessResult(CommonConstants.THIRD_VIDEO_DOMAIN+CommonConstants.CREATE_CHANNEL,params);
+        Channel channel = getChannelFromJson(result);
+        if (channel != null) {
+            channelDao.save(channel);
+        }
+        return channel;
+    }
+
+    /**
+     * 通过Json对象生成Channel对象
+     * @param result
+     * @return
+     */
+    private Channel getChannelFromJson(JSONObject result) {
+        if (CommonConstants.Status.SUCCESS_STATUS.getCode() != (Integer) result.get("code")){
+            return null;
+        }
+        Channel channel = new Channel();
+        JSONObject channelJson = (JSONObject)result.get("ret");
+        channel.setCid(channelJson.getString("cid"));
+        channel.setName(channelJson.getString("name"));
+        channel.setPushUrl(channelJson.getString("pushUrl"));
+        channel.setHttpPullUrl(channelJson.getString("httpPullUrl"));
+        channel.setHlsPullUrl(channelJson.getString("hlsPullUrl"));
+        channel.setRtmpPullUrl(channelJson.getString("rtmpPullUrl"));
+        channel.setCtime(channelJson.getLong("ctime"));
+        return channel;
     }
 
     /**
@@ -49,7 +97,17 @@ public class NeteaseVideoChannelServiceImpl implements ChannelService{
      */
     @Override
     public boolean deleteChannel(String cid) {
-        return false;
+        JSONObject params = new JSONObject();
+        params.put("cid",cid);
+        JSONObject result = getRemoteProcessResult(CommonConstants.THIRD_VIDEO_DOMAIN+CommonConstants.DELETE_CHANNEL,params);
+        if (CommonConstants.Status.SUCCESS_STATUS.getCode() == (Integer) result.get("code")){
+            channelDao.deleteByChannelId(cid);
+            log.info("频道删除成功，频道id："+cid);
+            return true;
+        }else{
+            log.error(result.get("msg"));
+            return false;
+        }
     }
 
     /**
@@ -246,5 +304,52 @@ public class NeteaseVideoChannelServiceImpl implements ChannelService{
     @Override
     public boolean setRecordInfo(Map<String, Object> recordInfoMap) {
         return false;
+    }
+
+    public NeteaseVideoChannelServiceImpl() {
+        super();
+    }
+
+    /**
+     * 获取网易云直播公共参数
+     * @return
+     */
+    private HttpPost getHttpPost(String url){
+        HttpPost post = new HttpPost(url);
+        post.addHeader("AppKey",netEaseVidoeConfig.getAppKey());
+        String nonce = netEaseVidoeConfig.getNonce();
+        post.addHeader("Nonce", nonce);
+        String curTime = netEaseVidoeConfig.getCurTime();
+        String appSecret = netEaseVidoeConfig.getAppSecret();
+        String checkSum = CheckSumBuilder.getCheckSum(appSecret,nonce,curTime);
+        post.addHeader("CurTime", curTime);
+        post.addHeader("CheckSum",checkSum);
+        post.addHeader("Content-Type", "application/json;charset=utf-8");
+        return post;
+    }
+
+    /**
+     * 调用远程接口，并返回结果
+     * @param url
+     * @param params
+     * @return
+     */
+    private JSONObject getRemoteProcessResult(String url,JSONObject params){
+        DefaultHttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = getHttpPost(url);
+
+        // 设置请求的参数
+        httpPost.setEntity(new StringEntity(params.toString(), Consts.UTF_8));
+        JSONObject object = null;
+        // 执行请求
+        try {
+            HttpResponse response = httpClient.execute(httpPost);
+            String stringBody = EntityUtils.toString(response.getEntity(), "utf-8");
+            object =  JSONObject.parseObject(stringBody);
+        } catch (Exception e) {
+            log.error("调用远程接口失败，接口地址： "	+ url + ",参数 : " + params.toString());
+            e.printStackTrace();
+        }
+        return object;
     }
 }

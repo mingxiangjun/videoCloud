@@ -19,31 +19,27 @@ import java.util.Date;
 @Component
 public class NetEaseVidoeConfig {
     // 开发者平台分配的AppKey
-    @Value(value = "${netease.public.appKey}")
+    @Value("${netease.public.appKey}")
     private String appKey;
-    @Value(value = "${netease.public.appSecret}")
+    @Value("${netease.public.appSecret}")
     private String appSecret;
     // 随机数（随机数，最大长度128个字符
-    private String nonce;
+    private String nonce = null;
     // 当前UTC时间戳，从1970年1月1日0点0分0秒开始到现在的秒数
-    private String curTime;
-    // 服务器认证需要，SHA1(AppSecret+Nonce+CurTime)，16进制字符小写
-    private String checkSum;
+    private String curTime = null;
 
     public String getAppKey() {
         return appKey;
     }
 
     public String getNonce() {
-        return UIDGenerator.getUUID();
+        String uuid = UIDGenerator.getUUID();
+        return uuid;
     }
 
     public String getCurTime() {
-        return String.valueOf((new Date()).getTime() / 1000L);
-    }
-
-    public String getCheckSum() {
-        return CheckSumBuilder.getCheckSum(getAppSecret(),getNonce(),getCurTime());
+        this.curTime = String.valueOf((new Date()).getTime() / 1000L);
+        return curTime;
     }
 
     public String getAppSecret() {

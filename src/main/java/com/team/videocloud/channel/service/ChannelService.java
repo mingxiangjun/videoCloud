@@ -1,6 +1,8 @@
 package com.team.videocloud.channel.service;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.team.videocloud.channel.po.Channel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -20,7 +22,7 @@ public interface ChannelService {
      * @param type 频道类型
      * @return
      */
-    public boolean createChannel(String name,int type);
+    public Channel createChannel(String name, int type);
 
     /**
      * 修改频道信息

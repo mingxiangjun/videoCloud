@@ -31,8 +31,8 @@ spring:
       exclude: META-INF/maven/**,META-INF/resources/**,resources/**,static/**,public/**,templates/**,**/*Test.class,**/*Tests.class,git.properties,META-INF/build-info.properties
 netease:
   public:
-    appKey: c1714073ebc3c45e4cd96c2183f84ef1
-    appSecret: 3a77c6017b29
+    appKey: 953690a751e101eca530ab3d5bb48d99
+    appSecret: f3acbec91bf5
 logging:
   level:
     root: debug
