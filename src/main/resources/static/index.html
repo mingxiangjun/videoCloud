@@ -10,54 +10,35 @@
     <script type="text/javascript" src="js/webpublish.js"></script>
 </head>
 <body>
-<div id="create_publisher" style="height: 50%;width: 50%;margin-left: 25%">
-    <input type="text" id="channelName" placeholder="请输入频道名称..."/>
-    <input type="text" id="channelType" placeholder="请输入频道类型..."/>
-    <input type="button" id="createChannel" onclick="createChannel()" value="创建频道"/>
-
-    <input type="text" id="channelId" placeholder="请输入需要删除的频道ID..."/>
-    <input type="button" id="deleteChannel" onclick="deleteChannel()" value="删除频道"/>
-    <input type="text" id="rtmpPullUrl" placeholder="当前新建频道推流地址...">
-</div>
-<div id="my-publisher" style="height: 50%;width: 50%;margin-left: 25%">
-    <video id="my-video" class="video-js vjs-fluid" x-webkit-airplay="allow" webkit-playsinline controls poster="neplayer/poster.png" preload="auto" width="640" height="360" data-setup="{}">
-        <source src="//nos.netease.com/vod163/demo.mp4" type="video/mp4">
-    </video>
-</div>
-<div id="publisher"></div>
-<script type="text/javascript">
- $(function () {
-//     setTimeout("initPublisher()",10000);
-     myPublisher = new window.nePublisher('nePublisher', {
-         videoWidth: 960,
-         videoHeight: 540,
-         fps: 20,
-         bitrate: 1500
-     }, {
-         previewWindowWidth: 862,
-         previewWindowHeight: 486,
-         wmode: 'transparent',
-         allowScriptAccess: 'always'
-     }, function () {
-             cameraList = this.getCameraList();
-             console.log("当前摄像头信息："+cameraList);
-             microPhoneList = this.getMicroPhoneList();
-             console.log("当前麦克风信息："+microPhoneList);
-         },function (code, desc) {
-             alter("加载失败，错误信息："+desc);
-         });
-     alert(myPublisher.getDefinedErrors());
-//     myPublisher = new nePublisher("publisher",
-//         function () {
-//             cameraList = this.getCameraList();
-//             console.log("当前摄像头信息："+cameraList);
-//             microPhoneList = this.getMicroPhoneList();
-//             console.log("当前麦克风信息："+microPhoneList);
-//         },function (code, desc) {
-//             alter("加载失败，错误信息："+desc);
-//         });
-
- })
-</script>
+    <div id="create_publisher" style="height: 50%;width: 50%;margin-left: 25%">
+        <input type="text" id="channelName" placeholder="请输入频道名称..."/>
+        <input type="text" id="channelType" placeholder="请输入频道类型..."/>
+        <input type="button" id="createChannel" onclick="createChannel()" value="创建频道"/>
+        <br/>
+        <input type="text" id="channelId" placeholder="请输入需要删除的频道ID..."/>
+        <input type="button" id="deleteChannel" onclick="deleteChannel()" value="删除频道"/>
+        <br/>
+        <input type="text" id="pushUrl" placeholder="当前新建频道推流地址...">
+        <input type="text" id="rtmpPullUrl" placeholder="当前新建频道拉流地址...">
+        <br/>
+        <input type="button" id="preview" onclick="preview()" value="预览"/>
+        <input type="button" onclick="getCameraSnapshot()" value="截图"/>
+        <input type="button" onclick="stopPreview()" value="停止预览"/>
+        <br/>
+        <input type="button" onclick="startPlayLive()" value="开始直播"/>
+        <input type="button" onclick="stopPlayLive()" value="停止直播"/>
+        <br/>
+        <input type="button" onclick="watchLive()" value="开始观看"/>
+        <input type="button" onclick="stopWatchLive()" value="停止观看"/>
+    </div>
+    <div id="my-publisher" style="height: 50%;width: 50%;margin-left: 25%">
+        <video id="my-video" class="video-js vjs-fluid" x-webkit-airplay="allow" webkit-playsinline controls poster="neplayer/poster.png" preload="auto" width="640" height="360" data-setup="{}">
+        </video>
+    </div>
+    <div id="publisherContainer" style="height: 50%;width: 50%;margin: 10px 21%">
+        <img src="neplayer/poster.png" id="myimg" width="100%" height="100%">
+        <div id="publisher">
+        </div>
+    </div>
 </body>
 </html>

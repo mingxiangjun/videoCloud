@@ -3,7 +3,7 @@ var microPhoneList;
 var myPublisher;
 
 $(function () {
-
+    // neplayer.setSWF('neplayer/video-js.swf')
     var viewOptions = {
         videoWidth: 640,    // Number 可选 推流分辨率 宽度 default 640
         videoHeight: 480,   // Number 可选 推流分辨率 高度 default 480
@@ -38,11 +38,10 @@ $(function () {
          */
         allowScriptAccess: 'always'
     }
-    // initPublisher();
-    // setTimeout("initPublisher()",3000);
+    initPublisher(viewOptions,flashOptions);
 })
-function initPublisher() {
-    myPublisher = new nePublisher("publisher",
+function initPublisher(viewOptions,flashOptions) {
+    myPublisher = new nePublisher("publisher",viewOptions,flashOptions,
         function () {
             cameraList = this.getCameraList();
             console.log("当前摄像头信息："+cameraList);
@@ -53,6 +52,9 @@ function initPublisher() {
         });
 }
 
+/**
+ * 创建频道信息
+ */
 function createChannel() {
     var channelName = $("#channelName").val();
     var channelType = $("#channelType").val();
@@ -65,9 +67,9 @@ function createChannel() {
         "data":params,
         "dataType":"json",
         "success":function(data){
-            alert(data);
-            var channelInfo = JSON.parse(data);
-            $("#rtmpPullUrl").val(channelInfo.rtmpPullUrl);
+            $("#pushUrl").val(data.pushUrl);
+            $("#rtmpPullUrl").val(data.rtmpPullUrl);
+            $("#channelId").val(data.cid);
         },
         "error":function (e) {
             alert(e);
@@ -75,6 +77,9 @@ function createChannel() {
     });
 }
 
+/**
+ * 根据频道id删除频道信息
+ */
 function deleteChannel() {
     var channelId = $("#channelId").val();
     var params = {
@@ -84,11 +89,94 @@ function deleteChannel() {
         "url":"/channel/delete",
         "data":params,
         "dataType":"json",
-        "success":function(){
-
+        "success":function(data){
+            if (data.code == 200){
+                alert("删除成功！");
+            }else{
+                alert(data.msg)
+            }
         },
         "error":function (e) {
             alert(e);
         }
     });
+}
+
+/**
+ * 开始预览
+ */
+function preview() {
+    myPublisher.startPreview(0)
+    var object = $("#publisher");
+    object.width = "100%";
+    object.height = "100%";
+}
+
+/**
+ * 获取预览截图
+ */
+function getCameraSnapshot(){
+    myPublisher.getCameraSnapshot(function(imgBase64Str){
+        //preview snapshot
+        $("#myimg").attr("src", "data:image/jpeg;base64," + imgBase64Str);
+        //or send to server
+        // ...
+    }, 50);
+}
+
+/**
+ * 停止预览
+ */
+function stopPreview() {
+    myPublisher.stopPreview()
+}
+
+/**
+ * 开始直播
+ */
+function startPlayLive() {
+    var pushUrl = $("#pushUrl").val();
+    myPublisher.startPublish(
+        pushUrl, // String 必选 要推流的频道地址
+        { // Object 可选 推流参数
+            videoWidth: 640,    // Number 可选 推流分辨率 宽度 default 640
+            videoHeight: 480,   // Number 可选 推流分辨率 高度 default 480
+            fps: 15,            // Number 可选 推流帧率 default 15
+            bitrate: 600,       // Number 可选 推流码率 default 600
+            video: true,       // Boolean 可选 是否推流视频 default true
+            audio: true       // Boolean 可选 是否推流音频 default true
+        }, function(code, desc) {
+            /*
+                function 可选 推流过程中发生错误进行回调
+                @param code 错误代码
+                @param desc 错误信息
+                判断是否有错误代码传入推流过程中是否发生错误
+                若有错误可进行相应的错误提示
+            */
+        });
+}
+
+/**
+ * 停止直播
+ */
+function stopPlayLive() {
+    myPublisher.stopPublish();
+    myPublisher.release();
+}
+
+/**
+ * 观看直播
+ */
+function watchLive() {
+    var rmtpPullUrl = $("#rtmpPullUrl").val();
+    var myPlayer = neplayer('my-video');
+    myPlayer.setDataSource({src:rmtpPullUrl,type:"rtmp/flv"});
+    myPlayer.play();
+}
+
+/**
+ * 停止直播
+ */
+function stopWatchLive() {
+
 }

@@ -1,2 +1,19 @@
 网易云直播API地址：
 http://dev.netease.im/docs/product/%E7%9B%B4%E6%92%AD/%E6%9C%8D%E5%8A%A1%E7%AB%AFAPI%E6%96%87%E6%A1%A3
+
+tomcat服务器证书配置问题：
+https://www.cnblogs.com/wanghaoyuhappy/p/5267702.html
+
+springboot部署ssl协议，使用https协议
+https://blog.csdn.net/shouldnotappearcalm/article/details/78047047
+注意：注意代码版本问题，此代码应该是1.5.9版本
+
+本系统测试页面访问地址：
+https://localhost:8443/index.html
+
+1、由于在项目业务中，需要使用摄像头功能，而在chrome中，摄像头需要在安全的协议下使用。所以这里需要配置tomcat对应ssl协议的https访问方式
+浏览器提示信息：
+Microphone and Camera access no longer works on insecure origins.
+To use this feature, you should consider switching your application to a secure origin, such as HTTPS.
+See https://goo.gl/rStTGz for more details
+2、

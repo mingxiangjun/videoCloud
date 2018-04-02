@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -85,6 +86,7 @@ public class NeteaseVideoChannelServiceImpl implements ChannelService{
      * @return
      */
     @Override
+    @Transactional
     public boolean updateChannel(String name, String cid, int type) {
         return false;
     }
@@ -96,18 +98,18 @@ public class NeteaseVideoChannelServiceImpl implements ChannelService{
      * @return
      */
     @Override
-    public boolean deleteChannel(String cid) {
+    @Transactional(readOnly = false)
+    public JSONObject deleteChannel(String cid) {
         JSONObject params = new JSONObject();
         params.put("cid",cid);
         JSONObject result = getRemoteProcessResult(CommonConstants.THIRD_VIDEO_DOMAIN+CommonConstants.DELETE_CHANNEL,params);
         if (CommonConstants.Status.SUCCESS_STATUS.getCode() == (Integer) result.get("code")){
             channelDao.deleteByChannelId(cid);
             log.info("频道删除成功，频道id："+cid);
-            return true;
         }else{
-            log.error(result.get("msg"));
-            return false;
+            log.error("删除频道["+cid+"]失败"+result.get("msg"));
         }
+        return result;
     }
 
     /**

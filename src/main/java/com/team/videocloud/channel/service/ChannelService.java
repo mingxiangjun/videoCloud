@@ -38,7 +38,7 @@ public interface ChannelService {
      * @param cid 频道id
      * @return
      */
-    public boolean deleteChannel(String cid);
+    public JSONObject deleteChannel(String cid);
 
     /**
      * 根据频道id获取频道信息
