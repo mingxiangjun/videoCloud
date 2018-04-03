@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.team.videocloud.channel.po.Channel;
 import com.team.videocloud.channel.service.ChannelService;
 import com.team.videocloud.common.CommonConstants;
+import com.team.videocloud.common.bean.ReturnSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +34,7 @@ public class ChannelController {
     @RequestMapping(value = "/delete")
     @ResponseBody
     public String deleteChannel(@RequestParam(value = "channelId") String channelId){
-        JSONObject result = channelService.deleteChannel(channelId);
-        return result.toString();
+        ReturnSet returnSet = channelService.deleteChannel(channelId);
+        return JSONObject.toJSON(returnSet).toString();
     }
 }

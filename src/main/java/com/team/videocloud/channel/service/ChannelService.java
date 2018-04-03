@@ -3,6 +3,7 @@ package com.team.videocloud.channel.service;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.team.videocloud.channel.po.Channel;
+import com.team.videocloud.common.bean.ReturnSet;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -31,21 +32,21 @@ public interface ChannelService {
      * @param type 频道类型
      * @return
      */
-    public boolean updateChannel(String name,String cid,int type);
+    public ReturnSet updateChannel(String name, String cid, int type);
 
     /**
      * 删除频道
      * @param cid 频道id
      * @return
      */
-    public JSONObject deleteChannel(String cid);
+    public ReturnSet deleteChannel(String cid);
 
     /**
      * 根据频道id获取频道信息
      * @param cid
      * @return
      */
-    public Map<String,Object> getChannelById(String cid);
+    public Channel getChannelById(String cid);
 
     /**
      * 获取频道列表
@@ -68,35 +69,35 @@ public interface ChannelService {
      * @param cid
      * @return
      */
-    public boolean setChannelRecord(String cid);
+    public ReturnSet setChannelRecord(String cid);
 
     /**
      * 停用频道
      * @param cid
      * @return
      */
-    public boolean pauseChannel(String cid);
+    public ReturnSet pauseChannel(String cid);
 
     /**
      * 批量禁用频道
      * @param ids
      * @return
      */
-    public boolean pauseChannel(String... ids);
+    public ReturnSet pauseChannel(String... ids);
 
     /**
      * 恢复频道使用
      * @param id
      * @return
      */
-    public boolean resumeChannel(String id);
+    public ReturnSet resumeChannel(String id);
 
     /**
      * 批量恢复使用频道
      * @param ids
      * @return
      */
-    public boolean resumeChannels(String... ids);
+    public ReturnSet resumeChannels(String... ids);
 
     /**
      * 获取频道录制视频列表（分页返回）

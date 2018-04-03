@@ -5,6 +5,7 @@ import com.team.videocloud.channel.dao.ChannelDao;
 import com.team.videocloud.channel.po.Channel;
 import com.team.videocloud.channel.service.ChannelService;
 import com.team.videocloud.common.CommonConstants;
+import com.team.videocloud.common.bean.ReturnSet;
 import com.team.videocloud.common.config.NetEaseVidoeConfig;
 import com.team.videocloud.wangyi.util.CheckSumBuilder;
 import lombok.extern.apachecommons.CommonsLog;
@@ -87,8 +88,18 @@ public class NeteaseVideoChannelServiceImpl implements ChannelService{
      */
     @Override
     @Transactional
-    public boolean updateChannel(String name, String cid, int type) {
-        return false;
+    public ReturnSet updateChannel(String name, String cid, int type) {
+        JSONObject params = new JSONObject();
+        params.put("name",name);
+        params.put("cid",cid);
+        params.put("type",type);
+        JSONObject result = getRemoteProcessResult(CommonConstants.THIRD_VIDEO_DOMAIN+CommonConstants.UPDATE_CHANNEL,params);
+        int code = (Integer)result.get("code");
+        if (code == CommonConstants.Status.SUCCESS_STATUS.getCode()) {
+            return ReturnSet.success();
+        }else{
+            return ReturnSet.fail(result.get("msg").toString()).code(code);
+        }
     }
 
     /**
@@ -99,17 +110,19 @@ public class NeteaseVideoChannelServiceImpl implements ChannelService{
      */
     @Override
     @Transactional(readOnly = false)
-    public JSONObject deleteChannel(String cid) {
+    public ReturnSet deleteChannel(String cid) {
         JSONObject params = new JSONObject();
         params.put("cid",cid);
         JSONObject result = getRemoteProcessResult(CommonConstants.THIRD_VIDEO_DOMAIN+CommonConstants.DELETE_CHANNEL,params);
+        int code = (int) result.get("code");
         if (CommonConstants.Status.SUCCESS_STATUS.getCode() == (Integer) result.get("code")){
             channelDao.deleteByChannelId(cid);
             log.info("频道删除成功，频道id："+cid);
+            return ReturnSet.success();
         }else{
-            log.error("删除频道["+cid+"]失败"+result.get("msg"));
+            log.error("删除频道["+cid+"]失败:"+code+"\t"+result.get("msg"));
+            return ReturnSet.fail(result.get("msg").toString()).code(code);
         }
-        return result;
     }
 
     /**
@@ -119,7 +132,7 @@ public class NeteaseVideoChannelServiceImpl implements ChannelService{
      * @return
      */
     @Override
-    public Map<String, Object> getChannelById(String cid) {
+    public Channel getChannelById(String cid) {
         return null;
     }
 
@@ -154,8 +167,8 @@ public class NeteaseVideoChannelServiceImpl implements ChannelService{
      * @return
      */
     @Override
-    public boolean setChannelRecord(String cid) {
-        return false;
+    public ReturnSet setChannelRecord(String cid) {
+        return null;
     }
 
     /**
@@ -165,8 +178,8 @@ public class NeteaseVideoChannelServiceImpl implements ChannelService{
      * @return
      */
     @Override
-    public boolean pauseChannel(String cid) {
-        return false;
+    public ReturnSet pauseChannel(String cid) {
+        return null;
     }
 
     /**
@@ -176,8 +189,8 @@ public class NeteaseVideoChannelServiceImpl implements ChannelService{
      * @return
      */
     @Override
-    public boolean pauseChannel(String... ids) {
-        return false;
+    public ReturnSet pauseChannel(String... ids) {
+        return null;
     }
 
     /**
@@ -187,8 +200,8 @@ public class NeteaseVideoChannelServiceImpl implements ChannelService{
      * @return
      */
     @Override
-    public boolean resumeChannel(String id) {
-        return false;
+    public ReturnSet resumeChannel(String id) {
+        return null;
     }
 
     /**
@@ -198,8 +211,8 @@ public class NeteaseVideoChannelServiceImpl implements ChannelService{
      * @return
      */
     @Override
-    public boolean resumeChannels(String... ids) {
-        return false;
+    public ReturnSet resumeChannels(String... ids) {
+        return null;
     }
 
     /**
@@ -314,7 +327,7 @@ public class NeteaseVideoChannelServiceImpl implements ChannelService{
 
     /**
      * 获取网易云直播公共参数
-     * @return
+     * @return HttpPost对象
      */
     private HttpPost getHttpPost(String url){
         HttpPost post = new HttpPost(url);
@@ -332,9 +345,9 @@ public class NeteaseVideoChannelServiceImpl implements ChannelService{
 
     /**
      * 调用远程接口，并返回结果
-     * @param url
-     * @param params
-     * @return
+     * @param url 远程接口调用地址
+     * @param params 远程接口参数
+     * @return 执行结果
      */
     private JSONObject getRemoteProcessResult(String url,JSONObject params){
         DefaultHttpClient httpClient = new DefaultHttpClient();
