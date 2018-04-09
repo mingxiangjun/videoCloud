@@ -31,9 +31,29 @@ public class Channel {
      */
     private String name;
     /**
-     * 频道类型
+     * 频道类型 ( 0 : rtmp, 1 : hls, 2 : http)
      */
     private int type;
+    /**
+     * 频道状态（0：空闲； 1：直播； 2：禁用； 3：直播录制）
+     */
+    private int status;
+    /**
+     * 1-开启录制； 0-关闭录制
+     */
+    private int needRecord;
+    /**
+     * 1-flv； 0-mp4
+     */
+    private int format;
+    /**
+     * 录制切片时长(分钟)，默认120分钟
+     */
+    private int duration;
+    /**
+     * 录制后文件名
+     */
+    private String filename;
     /**
      * 创建时间
      */

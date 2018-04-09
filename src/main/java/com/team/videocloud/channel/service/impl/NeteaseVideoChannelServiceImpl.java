@@ -1,5 +1,7 @@
 package com.team.videocloud.channel.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.team.videocloud.channel.dao.ChannelDao;
 import com.team.videocloud.channel.po.Channel;
@@ -17,10 +19,13 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -49,25 +54,28 @@ public class NeteaseVideoChannelServiceImpl implements ChannelService{
         JSONObject params = new JSONObject();
         params.put("name",name);
         params.put("type",type);
-        JSONObject result = getRemoteProcessResult(CommonConstants.THIRD_VIDEO_DOMAIN+CommonConstants.CREATE_CHANNEL,params);
-        Channel channel = getChannelFromJson(result);
-        if (channel != null) {
-            channelDao.save(channel);
+        String remoteUrl = CommonConstants.THIRD_VIDEO_DOMAIN + CommonConstants.CREATE_CHANNEL;
+        JSONObject result = getRemoteProcessResult(remoteUrl,params);
+        if (CommonConstants.Status.SUCCESS_STATUS.getCode() != result.getInteger("code")){
+            log.error("调用远程接口出错："+remoteUrl+"\t"+result.getString("msg"));
+            return null;
+        }else{
+            JSONObject channelJson = (JSONObject)result.get("ret");
+            Channel channel = getChannelFromJson(channelJson);
+            if (channel != null) {
+                channelDao.save(channel);
+            }
+            return channel;
         }
-        return channel;
     }
 
     /**
      * 通过Json对象生成Channel对象
-     * @param result
+     * @param channelJson
      * @return
      */
-    private Channel getChannelFromJson(JSONObject result) {
-        if (CommonConstants.Status.SUCCESS_STATUS.getCode() != (Integer) result.get("code")){
-            return null;
-        }
+    private Channel getChannelFromJson(JSONObject channelJson) {
         Channel channel = new Channel();
-        JSONObject channelJson = (JSONObject)result.get("ret");
         channel.setCid(channelJson.getString("cid"));
         channel.setName(channelJson.getString("name"));
         channel.setPushUrl(channelJson.getString("pushUrl"));
@@ -84,7 +92,7 @@ public class NeteaseVideoChannelServiceImpl implements ChannelService{
      * @param name 频道名称
      * @param cid  频道id
      * @param type 频道类型
-     * @return
+     * @return 返回数据结果集
      */
     @Override
     @Transactional
@@ -106,7 +114,7 @@ public class NeteaseVideoChannelServiceImpl implements ChannelService{
      * 删除频道
      *
      * @param cid 频道id
-     * @return
+     * @return 删除结果，如果报错，则包含错误信息
      */
     @Override
     @Transactional(readOnly = false)
@@ -128,24 +136,71 @@ public class NeteaseVideoChannelServiceImpl implements ChannelService{
     /**
      * 根据频道id获取频道信息
      *
-     * @param cid
-     * @return
+     * @param cid 频道ID
+     * @return 执行结果，获取到返回Channel对象，获取不到返回null
      */
     @Override
     public Channel getChannelById(String cid) {
-        return null;
+        JSONObject params = new JSONObject();
+        params.put("cid",cid);
+        String remoteUrl = CommonConstants.THIRD_VIDEO_DOMAIN + CommonConstants.GET_CHANNEL;
+        JSONObject result = getRemoteProcessResult(remoteUrl,params);
+        if (CommonConstants.Status.SUCCESS_STATUS.getCode() != result.getInteger("code")){
+            log.error("调用远程接口出错："+remoteUrl+"\t"+result.getString("msg"));
+            return null;
+        }else{
+            JSONObject channelJson = (JSONObject)result.get("ret");
+            Channel channel = getChannelFromJson(channelJson);
+            return channel;
+        }
     }
 
     /**
      * 获取频道列表
      *
-     * @param pageable 分页器
+     * @param pageable 分页器(页码起始值为1)
      * @param status   频道状态：0：空闲,1：直播，2：禁用，3：录制中
-     * @return
+     * @return Page分页频道列表
      */
     @Override
     public Page getChannelList(Pageable pageable, int status) {
-        return null;
+        JSONObject params = new JSONObject();
+        // 单页记录数，默认值为10
+        params.put("records",pageable.getPageSize());
+        // 要取第几页，默认值为1
+        params.put("pnum",pageable.getPageNumber());
+        // 排序的域，支持的排序域为：ctime（默认）
+        params.put("ofield",pageable.getSort().toString());
+        Sort sort = pageable.getSort();
+        for (Sort.Order order: sort){
+            Sort.Direction direction = order.getDirection();
+            if (direction.isAscending()){
+                // 升序还是降序，1升序，0降序，默认为desc
+                params.put("sort", 1);
+            }
+        }
+        String remoteUrl = CommonConstants.THIRD_VIDEO_DOMAIN + CommonConstants.GET_CHANNEL_LIST;
+        JSONObject result = getRemoteProcessResult(remoteUrl,params);
+        if (CommonConstants.Status.SUCCESS_STATUS.getCode() != result.getInteger("code")){
+            log.error("调用远程接口出错："+remoteUrl+"\t"+result.getString("msg"));
+            return null;
+        }else{
+            JSONObject channelJson = (JSONObject)result.get("ret");
+            List<Channel> resultList = getChannelListFromJson(channelJson);
+            Page page = new PageImpl(resultList,pageable,resultList.size());
+            return page;
+        }
+    }
+
+    private List<Channel> getChannelListFromJson(JSONObject channelJsons) {
+        List<Channel> resultList = new ArrayList<Channel>();
+        JSONArray resultJsonArr = channelJsons.getJSONArray("list");
+        for (int i=0 ;i<resultJsonArr.size();i++){
+            JSONObject channelJson = (JSONObject) resultJsonArr.get(i);
+            Channel channel = getChannelFromJson(channelJson);
+            resultList.add(channel);
+        }
+        return resultList;
     }
 
     /**
